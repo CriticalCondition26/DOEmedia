@@ -1,0 +1,21 @@
+{
+  "name": "@doemedia/ai",
+  "version": "0.0.1",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "@doemedia/db": "workspace:*",
+    "@doemedia/shared": "workspace:*",
+    "@google/generative-ai": "^0.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "typescript": "^5.7.0"
+  }
+}
