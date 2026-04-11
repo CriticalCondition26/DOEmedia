@@ -11,3 +11,4 @@ export { creativeBriefs } from "./creative-briefs";
 export { adCopyVariants } from "./ad-copy";
 export { visualConcepts } from "./visual-concepts";
 export { pipelineItems, syncLogs } from "./pipeline-items";
+export { accountAlerts, alertPreferences } from "./alerts";

@@ -8,5 +8,6 @@ const connection = new IORedis(process.env.REDIS_URL ?? "redis://localhost:6379"
 export const metaSyncQueue = new Queue("meta-sync", { connection });
 export const aiAnalysisQueue = new Queue("ai-analysis", { connection });
 export const aiGenerationQueue = new Queue("ai-generation", { connection });
+export const alertsQueue = new Queue("alerts", { connection });
 
 export { connection };

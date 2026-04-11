@@ -4,6 +4,9 @@ import { setupSchedulers } from "./schedulers";
 import { syncMetaInsights } from "./jobs/sync-meta-insights";
 import { syncAllAccounts } from "./jobs/sync-all-accounts";
 import { generateStrategy } from "./jobs/generate-strategy";
+import { evaluateAlerts } from "./jobs/evaluate-alerts";
+import { enrichAlertsWithAI } from "./jobs/enrich-alerts";
+import { sendAlertNotifications } from "./jobs/send-alert-notifications";
 
 async function main() {
   console.log("Starting Doe Media workers...");
@@ -64,6 +67,27 @@ async function main() {
     }
   );
 
+  // Alert system worker
+  const alertsWorker = new Worker(
+    "alerts",
+    async (job) => {
+      switch (job.name) {
+        case "evaluate-alerts":
+          return evaluateAlerts(job);
+        case "enrich-alerts":
+          return enrichAlertsWithAI(job);
+        case "send-notifications":
+          return sendAlertNotifications(job);
+        default:
+          console.warn(`Unknown alerts job: ${job.name}`);
+      }
+    },
+    {
+      connection,
+      concurrency: 2, // Limit concurrency for alert processing
+    }
+  );
+
   // Set up scheduled jobs
   await setupSchedulers();
 
@@ -73,6 +97,7 @@ async function main() {
     await metaSyncWorker.close();
     await aiAnalysisWorker.close();
     await aiGenerationWorker.close();
+    await alertsWorker.close();
     process.exit(0);
   };
 

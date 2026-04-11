@@ -1,4 +1,5 @@
-import { metaSyncQueue, aiAnalysisQueue } from "./queues";
+import { metaSyncQueue, aiAnalysisQueue, alertsQueue } from "./queues";
+import { ALERT_CHECK_INTERVAL_MINUTES } from "@doemedia/shared";
 
 /**
  * Set up recurring job schedules.
@@ -31,6 +32,38 @@ export async function setupSchedulers() {
     { pattern: "0 6 * * 1" }, // Cron: 6 AM every Monday
     {
       name: "analyze-all-accounts",
+      data: {},
+    }
+  );
+
+  // --- Alert System Schedulers ---
+
+  // Evaluate alert rules every hour
+  await alertsQueue.upsertJobScheduler(
+    "evaluate-alerts",
+    { every: ALERT_CHECK_INTERVAL_MINUTES * 60 * 1000 },
+    {
+      name: "evaluate-alerts",
+      data: {},
+    }
+  );
+
+  // Enrich new alerts with AI analysis every 15 minutes
+  await alertsQueue.upsertJobScheduler(
+    "enrich-alerts",
+    { every: 15 * 60 * 1000 },
+    {
+      name: "enrich-alerts",
+      data: {},
+    }
+  );
+
+  // Send pending notifications every 5 minutes
+  await alertsQueue.upsertJobScheduler(
+    "send-notifications",
+    { every: 5 * 60 * 1000 },
+    {
+      name: "send-notifications",
       data: {},
     }
   );

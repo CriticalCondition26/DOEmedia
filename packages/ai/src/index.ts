@@ -32,6 +32,11 @@ export {
   buildVisualConceptPrompt,
   VISUAL_CONCEPT_SYSTEM,
 } from "./prompts/visual-concepts";
+export {
+  buildAlertAnalysisPrompt,
+  ALERT_ANALYSIS_SYSTEM,
+  type AlertAnalysisInput,
+} from "./prompts/alert-analysis";
 
 // Schemas
 export { analysisOutputSchema, type AnalysisOutput } from "./schemas/analysis-schema";

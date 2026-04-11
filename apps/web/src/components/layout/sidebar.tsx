@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Clients", href: "/clients", icon: UsersIcon },
+  { name: "Alerts", href: "/alerts", icon: AlertIcon },
   { name: "Pipeline", href: "/pipeline", icon: KanbanIcon },
   { name: "Pods", href: "/pods", icon: PodIcon },
   { name: "Analytics", href: "/analytics", icon: ChartIcon },
@@ -98,6 +99,15 @@ function PodIcon({ className }: { className?: string }) {
       <circle cx="12" cy="12" r="10" />
       <circle cx="12" cy="10" r="3" />
       <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+    </svg>
+  );
+}
+
+function AlertIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
     </svg>
   );
 }

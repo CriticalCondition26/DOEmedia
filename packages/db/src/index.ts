@@ -20,3 +20,8 @@ export {
   getBriefVisualConcepts,
   getClientCopyVariants,
 } from "./queries/briefs";
+export {
+  getClientAlerts,
+  getClientAlertSummary,
+  getClientAlertPreferences,
+} from "./queries/alerts";
