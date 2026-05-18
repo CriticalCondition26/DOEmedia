@@ -9,6 +9,7 @@ const navigation = [
   { name: "Pipeline", href: "/pipeline", icon: KanbanIcon },
   { name: "Pods", href: "/pods", icon: PodIcon },
   { name: "Analytics", href: "/analytics", icon: ChartIcon },
+  { name: "TikTok Tools", href: "/tiktok-tools", icon: ShopIcon },
   { name: "Settings", href: "/settings", icon: SettingsIcon },
 ];
 
@@ -98,6 +99,15 @@ function PodIcon({ className }: { className?: string }) {
       <circle cx="12" cy="12" r="10" />
       <circle cx="12" cy="10" r="3" />
       <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+    </svg>
+  );
+}
+
+function ShopIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9h18l-1.5 11a2 2 0 0 1-2 1.8H6.5a2 2 0 0 1-2-1.8L3 9Z" />
+      <path d="M8 9V6a4 4 0 0 1 8 0v3" />
     </svg>
   );
 }
