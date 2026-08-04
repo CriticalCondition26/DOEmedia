@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Creative OS — Master Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #0a0a0c;
+  --bg-1: #111114;
+  --bg-2: #18181d;
+  --bg-3: #1f1f25;
+  --line: #2a2a32;
+  --line-bright: #3a3a45;
+  --ink-1: #f5f5f7;
+  --ink-2: #c8c8d0;
+  --ink-3: #8a8a95;
+  --ink-4: #5a5a65;
+  --accent: #d4ff3a;
+  --accent-soft: rgba(212, 255, 58, 0.12);
+  --accent-glow: rgba(212, 255, 58, 0.4);
+  --warn: #ff9650;
+  --critical: #ff5e5e;
+  --info: #5acef0;
+
+  --display: 'Fraunces', Georgia, serif;
+  --body: 'Inter Tight', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-0);
+  color: var(--ink-2);
+  font-family: var(--body);
+  font-size: 14px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+/* === GRID OVERLAY === */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* === LAYOUT === */
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+/* === TOP BAR === */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(10, 10, 12, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--bg-0);
+  letter-spacing: -0.05em;
+}
+
+.topbar-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+}
+
+.topbar-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.topbar-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.topbar-nav a {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-3);
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.topbar-nav a:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* === HERO === */
+.hero {
+  padding: 120px 0 80px;
+  position: relative;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 32px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--ink-1);
+  margin-bottom: 32px;
+  max-width: 1100px;
+}
+
+.hero-title em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  font-feature-settings: "ss01";
+}
+
+.hero-sub {
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 780px;
+  margin-bottom: 56px;
+  letter-spacing: -0.005em;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.stat-block .stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+}
+
+.stat-block .stat-value {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 38px;
+  color: var(--ink-1);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-block .stat-detail {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* === SECTION === */
+.section {
+  padding: 120px 0;
+  border-top: 1px solid var(--line);
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  margin-bottom: 64px;
+  align-items: start;
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 12px;
+}
+
+.section-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink-1);
+  margin-bottom: 24px;
+}
+
+.section-lede {
+  font-size: 17px;
+  color: var(--ink-2);
+  max-width: 720px;
+  line-height: 1.55;
+}
+
+/* === ORG CHART === */
+.org-chart {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.org-chart::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.org-tier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 56px;
+  position: relative;
+}
+
+.org-tier:last-child { margin-bottom: 0; }
+
+.org-tier-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.org-tier-label::before,
+.org-tier-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 80px;
+  height: 1px;
+  background: var(--line);
+}
+
+.org-tier-label::before { right: calc(100% + 16px); }
+.org-tier-label::after { left: calc(100% + 16px); }
+
+.org-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.org-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 24px;
+  width: 240px;
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.org-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(212, 255, 58, 0.08);
+}
+
+.org-card.knox {
+  background: linear-gradient(135deg, var(--bg-2) 0%, rgba(212, 255, 58, 0.08) 100%);
+  border-color: var(--accent);
+}
+
+.org-card.knox::before {
+  content: 'HERMES';
+  position: absolute;
+  top: -8px;
+  right: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  background: var(--accent);
+  color: var(--bg-0);
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+
+.org-card-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.org-card-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+}
+
+.org-card-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.org-card-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: var(--bg-3);
+  color: var(--ink-3);
+}
+
+.tag.accent { background: var(--accent-soft); color: var(--accent); }
+.tag.warn { background: rgba(255, 150, 80, 0.12); color: var(--warn); }
+
+.org-connector {
+  width: 1px;
+  height: 32px;
+  background: var(--line);
+  margin: 0 auto;
+  position: relative;
+}
+
+.org-connector::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* === STAGE FLOW === */
+.stage-flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  position: relative;
+}
+
+.stage-flow::before {
+  content: '';
+  position: absolute;
+  top: 50px;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--line-bright) 0%, var(--accent) 50%, var(--line-bright) 100%);
+  z-index: 0;
+}
+
+.stage-card {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.stage-card:hover {
+  border-color: var(--accent);
+}
+
+.stage-num {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--accent);
+  margin-bottom: 16px;
+  letter-spacing: -0.04em;
+}
+
+.stage-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.stage-actor {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stage-list {
+  list-style: none;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.stage-list li {
+  padding: 6px 0;
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.stage-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--ink-4);
+}
+
+/* === TWO-COL === */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.panel {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 32px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 24px;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+}
+
+.panel-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* === SKILL TABLE === */
+.skill-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.skill-table th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-bright);
+  font-weight: 500;
+}
+
+.skill-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  color: var(--ink-2);
+  vertical-align: top;
+}
+
+.skill-table tr:hover td {
+  background: var(--bg-2);
+}
+
+.skill-id {
+  font-family: var(--mono);
+  font-weight: 500;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.skill-name {
+  font-family: var(--mono);
+  color: var(--ink-1);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tier-pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.tier-1 { background: var(--accent); color: var(--bg-0); }
+.tier-2 { background: var(--info); color: var(--bg-0); }
+.tier-3 { background: var(--ink-4); color: var(--ink-1); }
+
+/* === TECH STACK === */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.tech-card {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 28px;
+  transition: all 0.2s;
+}
+
+.tech-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-2);
+}
+
+.tech-category {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+  gap: 12px;
+}
+
+.tech-item:last-child { border-bottom: none; }
+
+.tech-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-1);
+}
+
+.tech-cost {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tech-purpose {
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.tech-item-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+/* === PRINCIPLES === */
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.principle {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.principle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+.principle-num {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--ink-3);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.principle-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.principle-body {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+/* === WORKFLOW DIAGRAM === */
+.workflow {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 48px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-2);
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.workflow .arrow { color: var(--accent); }
+.workflow .agent { color: var(--ink-1); font-weight: 700; }
+.workflow .gate { color: var(--warn); }
+.workflow .out { color: var(--info); }
+
+/* === OPERATORS === */
+.operator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.operator {
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 18px;
+  transition: all 0.2s;
+}
+
+.operator:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.operator-name {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink-1);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.operator-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.operator-quote {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.4;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+/* === FOOTER === */
+.footer {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+  margin-top: 80px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+}
+
+.footer-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-4);
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+.docs-list {
+  list-style: none;
+}
+
+.docs-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 60px 1fr 100px;
+  align-items: center;
+  gap: 16px;
+}
+
+.docs-list .doc-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+
+.docs-list .doc-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink-1);
+}
+
+.docs-list .doc-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: right;
+}
+
+/* === BACKDROP TEXT === */
+.backdrop-text {
+  position: absolute;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 240px;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: var(--bg-2);
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+/* === CALLOUT === */
+.callout {
+  background: linear-gradient(135deg, var(--bg-2) 0%, rgba(212, 255, 58, 0.05) 100%);
+  border: 1px solid var(--line-bright);
+  border-radius: 6px;
+  padding: 32px;
+  margin: 32px 0;
+  position: relative;
+}
+
+.callout-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.callout-text {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ink-1);
+  letter-spacing: -0.02em;
+}
+
+.callout-text em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow, .hero-title, .hero-sub, .hero-stats {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.hero-eyebrow { animation-delay: 0.1s; }
+.hero-title { animation-delay: 0.2s; }
+.hero-sub { animation-delay: 0.4s; }
+.hero-stats { animation-delay: 0.6s; }
+
+/* === RESPONSIVE === */
+@media (max-width: 1100px) {
+  .stage-flow { grid-template-columns: repeat(2, 1fr); }
+  .stage-flow::before { display: none; }
+  .two-col { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  .operator-grid { grid-template-columns: repeat(2, 1fr); }
+  .principles-grid { grid-template-columns: 1fr; }
+  .section-header { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .topbar-nav { display: none; }
+}
+
+@media (max-width: 640px) {
+  .shell, .topbar { padding-left: 24px; padding-right: 24px; }
+  .org-chart { padding: 32px 16px; }
+  .stage-flow { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: 1fr; }
+  .operator-grid { grid-template-columns: 1fr; }
+  .docs-list li { grid-template-columns: 40px 1fr; }
+  .docs-list .doc-status { grid-column: 2; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <div class="logo-mark">OS</div>
+    <div>
+      <div class="topbar-title">AI Creative OS</div>
+      <div class="topbar-meta">v1.0 · Tommy Consulting Pilot</div>
+    </div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="#org">Org</a>
+    <a href="#stages">Stages</a>
+    <a href="#workflow">Workflow</a>
+    <a href="#stack">Stack</a>
+    <a href="#skills">Skills</a>
+    <a href="#principles">Principles</a>
+    <a href="#operators">Operators</a>
+    <a href="#docs">Docs</a>
+  </nav>
+</div>
+
+<div class="shell">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-eyebrow">Master Reference · Build Document</div>
+    <h1 class="hero-title">
+      One strategist.<br>
+      <em>Sixteen agents.</em><br>
+      One creative engine.
+    </h1>
+    <p class="hero-sub">
+      The AI Creative OS turns a single creative strategist into the equivalent of a fifteen-person creative team. Tommy's consulting brand pilot launches first, then replicates to Doe Media, then to Shopify clients. This document is the operating manual.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-block">
+        <div class="stat-label">Volume Target</div>
+        <div class="stat-value">100<span style="color:var(--ink-3);font-size:24px;">/mo</span></div>
+        <div class="stat-detail">80 statics + 20 AI UGC videos per client</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Time Saved</div>
+        <div class="stat-value">86<span style="color:var(--ink-3);font-size:24px;">%</span></div>
+        <div class="stat-detail">vs. manual creative strategy ops</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Phase 1 Build</div>
+        <div class="stat-value">28<span style="color:var(--ink-3);font-size:24px;">days</span></div>
+        <div class="stat-detail">10 Tier 1 skills to launch</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-label">Per-Client Cost</div>
+        <div class="stat-value">$350<span style="color:var(--ink-3);font-size:24px;">/mo</span></div>
+        <div class="stat-detail">Tools + APIs + subscriptions</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ORG CHART ============ -->
+  <section class="section" id="org">
+    <div class="section-header">
+      <div class="section-num">01 — ORG</div>
+      <div>
+        <h2 class="section-title">The team</h2>
+        <p class="section-lede">Knox runs in Hermes. Everyone else lives inside the Tommy Consulting Paperclip company. The integration layer is the shared filesystem. Approval gates live in Paperclip's native inbox.</p>
+      </div>
+    </div>
+
+    <div class="org-chart">
+      <!-- Tommy -->
+      <div class="org-tier">
+        <div class="org-tier-label">Human Owner</div>
+        <div class="org-row">
+          <div class="org-card" style="background: var(--bg-3); border-color: var(--line-bright);">
+            <div class="org-card-name">Tommy</div>
+            <div class="org-card-role">Owner / Strategic Director</div>
+            <div class="org-card-desc">Approves prescription, briefs in batch, and final assets. Provides strategic direction. Doesn't operate tools.</div>
+            <div class="org-card-meta">
+              <span class="tag accent">Decision Authority</span>
+            </div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+      </div>
+
+      <!-- Knox -->
+      <div class="org-tier">
+        <div class="org-tier-label">Strategic Overlord</div>
+        <div class="org-row">
+          <div class="org-card knox">
+            <div class="org-card-name">Knox</div>
+            <div class="org-card-role">Master Orchestrator</div>
+            <div class="org-card-desc">Builds the Paperclip company. Spawns agents. Owns Layer 0 / Brand Brain. Surfaces decisions to Tommy. Daily briefings + weekly priorities.</div>
+            <div class="org-card-meta">
+              <span class="tag accent">4hr heartbeat</span>
+              <span class="tag">Daily 6AM</span>
+            </div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+      </div>
+
+      <!-- C-Suite -->
+      <div class="org-tier">
+        <div class="org-tier-label">C-Suite</div>
+        <div class="org-row">
+          <div class="org-card">
+            <div class="org-card-name">CMO</div>
+            <div class="org-card-role">Chief Marketing Officer</div>
+            <div class="org-card-desc">Tier 2 QA. Reviews work holistically. Routes kickbacks to specific agents. Batches approved work for Knox.</div>
+            <div class="org-card-meta">
+              <span class="tag">8hr heartbeat</span>
+              <span class="tag accent">Pipeline Lead</span>
+            </div>
+          </div>
+          <div class="org-card">
+            <div class="org-card-name">COO</div>
+            <div class="org-card-role">Chief Operating Officer</div>
+            <div class="org-card-desc">System watchdog. Monitors agent performance, pipeline bottlenecks, creative quality drift. Recommends scaling.</div>
+            <div class="org-card-meta">
+              <span class="tag">Daily 8AM</span>
+              <span class="tag warn">Quality Drift</span>
+            </div>
+          </div>
+          <div class="org-card">
+            <div class="org-card-name">CFO</div>
+            <div class="org-card-role">Chief Financial Officer</div>
+            <div class="org-card-desc">Spend tracking, cost-per-output analysis, subscription audit, cost-benefit recommendations.</div>
+            <div class="org-card-meta">
+              <span class="tag">Mon 9AM</span>
+              <span class="tag">Monthly Audit</span>
+            </div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+      </div>
+
+      <!-- Creative Strategist -->
+      <div class="org-tier">
+        <div class="org-tier-label">Strategy Layer</div>
+        <div class="org-row">
+          <div class="org-card">
+            <div class="org-card-name">Creative Strategist</div>
+            <div class="org-card-role">Reports to CMO</div>
+            <div class="org-card-desc">Runs the 6-Phase Methodology. Library audit, prescription, brief generation, performance diagnosis. Manages the 4 Directors.</div>
+            <div class="org-card-meta">
+              <span class="tag">Daily 7AM</span>
+              <span class="tag accent">6 Phases</span>
+            </div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+      </div>
+
+      <!-- Directors -->
+      <div class="org-tier">
+        <div class="org-tier-label">Director Layer</div>
+        <div class="org-row">
+          <div class="org-card">
+            <div class="org-card-name">Research</div>
+            <div class="org-card-role">Director of Research</div>
+            <div class="org-card-desc">Scopes 8 target marketers (Oren, Sabrina, Chase, Dara, Barry, Nick, Charley, Aazar) every 4 days. 80% targets, 20% trending.</div>
+            <div class="org-card-meta">
+              <span class="tag accent">4-day cadence</span>
+              <span class="tag">SPA tool</span>
+            </div>
+          </div>
+          <div class="org-card">
+            <div class="org-card-name">Copy</div>
+            <div class="org-card-role">Director of Copy</div>
+            <div class="org-card-desc">Writes 3 hooks + 2 bodies + 2 CTAs per concept (Charley's 3:2:2). Voice slot resolves to current Tommy Voice version.</div>
+            <div class="org-card-meta">
+              <span class="tag">Voice slot</span>
+              <span class="tag">Slop-detector</span>
+            </div>
+          </div>
+          <div class="org-card">
+            <div class="org-card-name">Creative</div>
+            <div class="org-card-role">Director of Creative</div>
+            <div class="org-card-desc">Pulls references. Runs Nano Banana 2 + Seedance 2.0 via FAL. Hook-only video gen, bolted to evergreen meat.</div>
+            <div class="org-card-meta">
+              <span class="tag">FAL API</span>
+              <span class="tag">HeyGen clone</span>
+            </div>
+          </div>
+          <div class="org-card">
+            <div class="org-card-name">Tech</div>
+            <div class="org-card-role">Director of Tech</div>
+            <div class="org-card-desc">Monitors Anthropic/FAL/HeyGen changelogs. MCP health. Recommends new tools. Watches Claude X account daily.</div>
+            <div class="org-card-meta">
+              <span class="tag">Daily 8AM</span>
+              <span class="tag">Tool eval</span>
+            </div>
+          </div>
+        </div>
+        <div class="org-connector"></div>
+      </div>
+
+      <!-- QA -->
+      <div class="org-tier">
+        <div class="org-tier-label">Quality Assurance</div>
+        <div class="org-row">
+          <div class="org-card" style="border-color: var(--warn);">
+            <div class="org-card-name">QA Checkpoint</div>
+            <div class="org-card-role">Tier 1 Validator</div>
+            <div class="org-card-desc">Runs 18-check checklist: brand standards, creative principles, operator-aligned checks, format compliance. Routes kickbacks to specific agents. Triggers on queue arrival.</div>
+            <div class="org-card-meta">
+              <span class="tag warn">On-trigger</span>
+              <span class="tag">18 checks</span>
+              <span class="tag">No taste calls</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAGES ============ -->
+  <section class="section" id="stages">
+    <div class="section-header">
+      <div class="section-num">02 — STAGES</div>
+      <div>
+        <h2 class="section-title">5-stage execution</h2>
+        <p class="section-lede">Every creative pipeline in the world runs the same five stages. Most agencies use AI for stages 1-3 then fail at stages 4-5 because they try to make AI do final composition and distribution. We use deterministic tools where determinism wins.</p>
+      </div>
+    </div>
+
+    <div class="stage-flow">
+      <div class="stage-card">
+        <div class="stage-num">01</div>
+        <div class="stage-name">Capture</div>
+        <div class="stage-actor">Director of Research</div>
+        <ul class="stage-list">
+          <li>Apify scraping</li>
+          <li>Customer voice mining</li>
+          <li>Competitor analysis</li>
+          <li>Trend monitoring</li>
+        </ul>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">02</div>
+        <div class="stage-name">Synthesize</div>
+        <div class="stage-actor">Creative Strategist</div>
+        <ul class="stage-list">
+          <li>Library audit</li>
+          <li>Strategic prescription</li>
+          <li>Concept briefs</li>
+          <li>Hook variants 3:2:2</li>
+        </ul>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">03</div>
+        <div class="stage-name">Generate</div>
+        <div class="stage-actor">Director of Creative</div>
+        <ul class="stage-list">
+          <li>Nano Banana 2 (static)</li>
+          <li>Seedance 2.0 (video)</li>
+          <li>HeyGen (avatar)</li>
+          <li>4 variants per asset</li>
+        </ul>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">04</div>
+        <div class="stage-name">Compose</div>
+        <div class="stage-actor">ffmpeg + Figma</div>
+        <ul class="stage-list">
+          <li>Hook + meat stitching</li>
+          <li>Copy/font overlay</li>
+          <li>Brand template fill</li>
+          <li>Production export</li>
+        </ul>
+      </div>
+      <div class="stage-card">
+        <div class="stage-num">05</div>
+        <div class="stage-name">Distribute</div>
+        <div class="stage-actor">Blotato + Meta API</div>
+        <ul class="stage-list">
+          <li>Multi-platform post</li>
+          <li>Performance pull</li>
+          <li>Diagnostic loop</li>
+          <li>Brand Brain update</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">The stages everyone gets wrong</div>
+      <div class="callout-text">
+        Stages 1-3 are AI's strength. Stages 4-5 are <em>deterministic infrastructure</em>. Mixing them is what kills systems. AI generates fragments. Deterministic tools compose them.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORKFLOW ============ -->
+  <section class="section" id="workflow">
+    <div class="section-header">
+      <div class="section-num">03 — WORKFLOW</div>
+      <div>
+        <h2 class="section-title">End-to-end</h2>
+        <p class="section-lede">A single concept's journey from research to distribution. Approval gates marked with ⓪. Kickbacks loop back to the failing agent.</p>
+      </div>
+    </div>
+
+    <div class="workflow"><span class="agent">KNOX</span> writes weekly priorities (Mon 9AM)
+    │
+    <span class="arrow">▼</span>
+<span class="agent">CREATIVE STRATEGIST</span> runs Library Audit (1st of month)
+    │  → audit/library-audit-{date}.md
+    <span class="arrow">▼</span>
+<span class="agent">CREATIVE STRATEGIST</span> runs Strategic Prescription
+    │  → sprints/prescription-{date}.md
+    <span class="arrow">▼</span>
+<span class="gate">⓪ CMO + KNOX + TOMMY approve prescription</span>
+    │
+    <span class="arrow">▼</span>
+<span class="agent">CREATIVE STRATEGIST</span> generates concept briefs
+    │  → briefs/{date}/brief-{n}.md
+    <span class="arrow">▼</span>
+<span class="gate">⓪ CMO approves briefs in batch</span>
+    │
+    <span class="arrow">▼</span>
+<span class="agent">DIRECTOR OF RESEARCH</span> scopes target marketers (every 4 days)
+    │  → raw/research-synthesis-{date}.md
+    <span class="arrow">▼</span>
+<span class="agent">DIRECTOR OF COPY</span> writes 3 hooks × 2 bodies × 2 CTAs
+    │  → pipeline/copy-drafts/concept-{n}/
+    <span class="arrow">▼</span>
+<span class="agent">DIRECTOR OF CREATIVE</span> pulls refs, generates assets
+    │  → pipeline/creative-drafts/concept-{n}/
+    <span class="arrow">▼</span>
+<span class="agent">FFMPEG / FIGMA</span> composes final assets (Stage 4)
+    │  → pipeline/qa-pending/concept-{n}/
+    <span class="arrow">▼</span>
+<span class="gate">QA CHECKPOINT runs 18-check checklist (Tier 1)</span>
+    │   PASS  ▶  pipeline/cmo-review/
+    │   FAIL  ◀  routes to failing agent (Copy/Creative/Strategist)
+    <span class="arrow">▼</span>
+<span class="gate">CMO holistic review (Tier 2)</span>
+    │   PASS  ▶  batch + summary to Knox
+    │   FAIL  ◀  strategic kickback
+    <span class="arrow">▼</span>
+<span class="agent">KNOX</span> reviews CMO batch summary
+    │  → checks against weekly priorities
+    │  → surfaces to Tommy with summary
+    <span class="arrow">▼</span>
+<span class="gate">⓪ TOMMY approves</span>
+    │
+    <span class="arrow">▼</span>
+<span class="out">DISTRIBUTION via Blotato + Meta Ads API</span>
+    │  → outputs/manifests/{date}-distribution.md
+    <span class="arrow">▼</span>
+<span class="agent">DIAGNOSTICIAN</span> pulls performance (weekly Sun 6PM)
+    │  → diagnostics/diagnostic-{date}.md
+    <span class="arrow">▼</span>
+Wins/losses logged in Brand Brain
+    │  → wiki/winners.md / wiki/losers.md
+    <span class="arrow">▼</span>
+<span class="agent">COO</span> correlates SPA scores ↔ real performance
+    │  → flags drift to CMO if patterns emerge
+    │
+    └──────────── LOOP back to next prescription cycle</div>
+  </section>
+
+  <!-- ============ TECH STACK ============ -->
+  <section class="section" id="stack">
+    <div class="section-header">
+      <div class="section-num">04 — STACK</div>
+      <div>
+        <h2 class="section-title">Tools &amp; tech</h2>
+        <p class="section-lede">Hybrid track: API-first where volume matters, subscriptions where speed wins, deterministic tools where AI can't be trusted. ~$350/mo per client at target volume.</p>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-category">Orchestration</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Hermes Agent</div>
+            <div class="tech-purpose">Master orchestrator (Knox lives here)</div>
+          </div>
+          <div class="tech-cost">FREE +<br>LLM API</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Paperclip</div>
+            <div class="tech-purpose">Visual org chart, ticket system</div>
+          </div>
+          <div class="tech-cost">FREE</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Claude Opus 4.7</div>
+            <div class="tech-purpose">Reasoning engine via API</div>
+          </div>
+          <div class="tech-cost">$15-75<br>per client</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Playwright MCP</div>
+            <div class="tech-purpose">Browser automation escape hatch</div>
+          </div>
+          <div class="tech-cost">FREE</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-category">Capture / Stage 1</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Apify</div>
+            <div class="tech-purpose">Meta/TikTok/IG/Reddit scraping</div>
+          </div>
+          <div class="tech-cost">$35/mo +<br>per-run</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Firecrawl MCP</div>
+            <div class="tech-purpose">Website scraping</div>
+          </div>
+          <div class="tech-cost">~$20/mo</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Tavily MCP</div>
+            <div class="tech-purpose">Web search for agents</div>
+          </div>
+          <div class="tech-cost">~$20/mo</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">OpenAI Whisper</div>
+            <div class="tech-purpose">Video transcription</div>
+          </div>
+          <div class="tech-cost">~$5-10/mo</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-category">Generate / Stage 3</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">FAL — Nano Banana 2</div>
+            <div class="tech-purpose">Static ads, product references</div>
+          </div>
+          <div class="tech-cost">$0.08-0.16<br>per image</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">FAL — Seedance 2.0</div>
+            <div class="tech-purpose">UGC video, hook generation</div>
+          </div>
+          <div class="tech-cost">$0.18-0.30<br>per second</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">HeyGen</div>
+            <div class="tech-purpose">Tommy avatar clone + lip sync</div>
+          </div>
+          <div class="tech-cost">$24-89/mo</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">ElevenLabs</div>
+            <div class="tech-purpose">Voice cloning</div>
+          </div>
+          <div class="tech-cost">$22/mo</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-category">Compose / Stage 4</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">ffmpeg</div>
+            <div class="tech-purpose">Hook+meat video stitching</div>
+          </div>
+          <div class="tech-cost">FREE</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Figma + MCP</div>
+            <div class="tech-purpose">Static ad copy/font finalization</div>
+          </div>
+          <div class="tech-cost">$15/editor</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-category">Distribute / Stage 5</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Blotato</div>
+            <div class="tech-purpose">Multi-platform organic posting</div>
+          </div>
+          <div class="tech-cost">Subscription</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Meta Ads API</div>
+            <div class="tech-purpose">Direct ad uploads</div>
+          </div>
+          <div class="tech-cost">FREE +<br>ad spend</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Supermetrics MCP</div>
+            <div class="tech-purpose">Performance attribution</div>
+          </div>
+          <div class="tech-cost">~$50/mo</div>
+        </div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-category">Knowledge / Layer 0</div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Notion</div>
+            <div class="tech-purpose">Brand bible sync, briefs Kanban</div>
+          </div>
+          <div class="tech-cost">~$15/mo</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Google Drive MCP</div>
+            <div class="tech-purpose">Brand asset access, archival</div>
+          </div>
+          <div class="tech-cost">FREE</div>
+        </div>
+        <div class="tech-item">
+          <div class="tech-item-meta">
+            <div class="tech-name">Cloudinary</div>
+            <div class="tech-purpose">Image CDN, FAL reference URLs</div>
+          </div>
+          <div class="tech-cost">FREE tier</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="section" id="skills">
+    <div class="section-header">
+      <div class="section-num">05 — SKILLS</div>
+      <div>
+        <h2 class="section-title">Skill inventory</h2>
+        <p class="section-lede">Tier 1 (10 skills) launches Phase 1. Tier 2 adds capability layers (SPA, drift detection). Tier 3 adds monitoring + advanced features. Skills are the unit of work — composable, testable, swappable.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">All skills</div>
+        <div class="panel-tag">10 + 8 + 8 = 26 total</div>
+      </div>
+      <table class="skill-table">
+        <thead>
+          <tr>
+            <th style="width:60px">ID</th>
+            <th style="width:220px">Skill</th>
+            <th style="width:80px">Tier</th>
+            <th style="width:160px">Owner</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="skill-id">01</td><td class="skill-name">brand-context-builder</td><td><span class="tier-pill tier-1">T1</span></td><td>Knox</td><td>Builds Layer 0 / Brand Brain. Personas at empathy-map depth.</td></tr>
+          <tr><td class="skill-id">02</td><td class="skill-name">library-audit</td><td><span class="tier-pill tier-1">T1</span></td><td>Creative Strategist</td><td>Tags ads with taxonomies. Identifies whitespace.</td></tr>
+          <tr><td class="skill-id">03</td><td class="skill-name">prescription-builder</td><td><span class="tier-pill tier-1">T1</span></td><td>Creative Strategist</td><td>Allocates next sprint's concepts across funnel/angle/format.</td></tr>
+          <tr><td class="skill-id">04</td><td class="skill-name">concept-brief-generator</td><td><span class="tier-pill tier-1">T1</span></td><td>Creative Strategist</td><td>Per-concept briefs with 3:2:2 variants, pre-validated.</td></tr>
+          <tr><td class="skill-id">05</td><td class="skill-name">apify-orchestration</td><td><span class="tier-pill tier-1">T1</span></td><td>Director of Research</td><td>Scrapes Meta/TikTok/IG/Reddit/Amazon/LinkedIn.</td></tr>
+          <tr><td class="skill-id">06</td><td class="skill-name">static-ad-generator</td><td><span class="tier-pill tier-1">T1</span></td><td>Director of Creative</td><td>Nano Banana 2 via FAL with product references.</td></tr>
+          <tr><td class="skill-id">07</td><td class="skill-name">ai-ugc-video-generator</td><td><span class="tier-pill tier-1">T1</span></td><td>Director of Creative</td><td>Seedance 2.0 hook gen + reference-to-video character lock.</td></tr>
+          <tr><td class="skill-id">08</td><td class="skill-name">qa-checklist-runner</td><td><span class="tier-pill tier-1">T1</span></td><td>QA Checkpoint</td><td>18-check Tier 1 validation. Routes kickbacks.</td></tr>
+          <tr><td class="skill-id">09</td><td class="skill-name">pipeline-monitor</td><td><span class="tier-pill tier-1">T1</span></td><td>COO</td><td>Daily pipeline state scan. Bottleneck detection.</td></tr>
+          <tr><td class="skill-id">10</td><td class="skill-name">spend-tracker</td><td><span class="tier-pill tier-1">T1</span></td><td>CFO</td><td>Cost per output. Subscription audit. Anomaly flags.</td></tr>
+          <tr><td class="skill-id">11</td><td class="skill-name">creative-diagnostician</td><td><span class="tier-pill tier-2">T2</span></td><td>Creative Strategist</td><td>Walks Diagnostic Decision Tree weekly. Updates Brand Brain.</td></tr>
+          <tr><td class="skill-id">12</td><td class="skill-name">voice-slot-resolver</td><td><span class="tier-pill tier-2">T2</span></td><td>Director of Copy</td><td>Resolves current voice slot. Zero-code v1→v2 swap.</td></tr>
+          <tr><td class="skill-id">13</td><td class="skill-name">synthetic-market-validator</td><td><span class="tier-pill tier-2">T2</span></td><td>Director of Research</td><td>SPA — virtual focus group. Used at strategic moments only.</td></tr>
+          <tr><td class="skill-id">14</td><td class="skill-name">creative-quality-correlator</td><td><span class="tier-pill tier-2">T2</span></td><td>COO</td><td>Correlates SPA scores ↔ real performance. Drift detection.</td></tr>
+          <tr><td class="skill-id">15</td><td class="skill-name">hook-meat-stitcher</td><td><span class="tier-pill tier-2">T2</span></td><td>Director of Creative</td><td>ffmpeg orchestration. Hook + meat + captions → vertical MP4.</td></tr>
+          <tr><td class="skill-id">16</td><td class="skill-name">figma-static-finalizer</td><td><span class="tier-pill tier-2">T2</span></td><td>Director of Creative</td><td>Figma MCP. Imports AI base, adds copy/fonts/brand layer.</td></tr>
+          <tr><td class="skill-id">17</td><td class="skill-name">daily-briefing-generator</td><td><span class="tier-pill tier-2">T2</span></td><td>Knox</td><td>1-page daily Tommy brief at 6 AM.</td></tr>
+          <tr><td class="skill-id">18</td><td class="skill-name">weekly-priorities-synthesizer</td><td><span class="tier-pill tier-2">T2</span></td><td>Knox</td><td>Monday priorities synthesis from C-suite reports.</td></tr>
+          <tr><td class="skill-id">19</td><td class="skill-name">claude-x-monitor</td><td><span class="tier-pill tier-3">T3</span></td><td>Director of Tech</td><td>Watches Anthropic X account for new releases.</td></tr>
+          <tr><td class="skill-id">20</td><td class="skill-name">fal-changelog-monitor</td><td><span class="tier-pill tier-3">T3</span></td><td>Director of Tech</td><td>FAL model releases, pricing changes.</td></tr>
+          <tr><td class="skill-id">21</td><td class="skill-name">mcp-marketplace-scanner</td><td><span class="tier-pill tier-3">T3</span></td><td>Director of Tech</td><td>New MCPs relevant to creative/marketing.</td></tr>
+          <tr><td class="skill-id">22</td><td class="skill-name">api-health-checker</td><td><span class="tier-pill tier-3">T3</span></td><td>Director of Tech</td><td>Daily auth + uptime ping per API/MCP.</td></tr>
+          <tr><td class="skill-id">23</td><td class="skill-name">subscription-status-tracker</td><td><span class="tier-pill tier-3">T3</span></td><td>Director of Tech</td><td>Verifies subscriptions active, alerts on failed renewals.</td></tr>
+          <tr><td class="skill-id">24</td><td class="skill-name">anomaly-detector</td><td><span class="tier-pill tier-3">T3</span></td><td>Knox</td><td>Pipeline stalls, unusual patterns, escalation routing.</td></tr>
+          <tr><td class="skill-id">25</td><td class="skill-name">meta-ads-publisher</td><td><span class="tier-pill tier-3">T3</span></td><td>Distribution</td><td>Direct Meta ad uploads via API.</td></tr>
+          <tr><td class="skill-id">26</td><td class="skill-name">blotato-multi-platform-publisher</td><td><span class="tier-pill tier-3">T3</span></td><td>Distribution</td><td>Multi-platform organic posting via Blotato.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ PRINCIPLES ============ -->
+  <section class="section" id="principles">
+    <div class="section-header">
+      <div class="section-num">06 — PRINCIPLES</div>
+      <div>
+        <h2 class="section-title">10 strategy laws</h2>
+        <p class="section-lede">Every architectural decision flows from these. The strategist agent operates by them. When something goes wrong, we trace it back to one of these being violated.</p>
+      </div>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle">
+        <div class="principle-num">01</div>
+        <div class="principle-title">Taxonomies beat improvisation</div>
+        <div class="principle-body">Brands without taxonomies ship random content and can't diagnose. Brands with taxonomies test variations of proven categories. The strategist never invents — picks from libraries.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">02</div>
+        <div class="principle-title">Diversity beats optimization</div>
+        <div class="principle-body">Single-angle libraries hit fatigue in 60 days. Healthy = 8+ of 18 angles. No single angle &gt;60%. No single format &gt;50%.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">03</div>
+        <div class="principle-title">Element-level diagnosis beats whole-ad replacement</div>
+        <div class="principle-body">When an ad fails, only one element broke (hook/body/close/conversion). Smart strategists fix the broken element. Most operators rebuild the whole ad. Wasteful.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">04</div>
+        <div class="principle-title">The hook earns the next 5 seconds</div>
+        <div class="principle-body">Hooks don't sell. They earn attention. The pitch comes later. A hook that pitches in the first 3 seconds is dead before it starts.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">05</div>
+        <div class="principle-title">Funnel stage determines everything</div>
+        <div class="principle-body">Same product, three different pitches based on cold/warm/hot. Wrong stage = wrong angles, wrong formats, wrong hooks, wrong benchmarks. Lock stage first.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">06</div>
+        <div class="principle-title">Specificity beats generality always</div>
+        <div class="principle-body">"Tired of being tired?" is dead. "If you're a busy mom hitting a 3pm energy wall" works. Generic placeholders = automatic rejection.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">07</div>
+        <div class="principle-title">Strategy compounds through the Brand Brain</div>
+        <div class="principle-body">Every winner logged with element-level diagnosis. Every loser logged with cause. After 30-60 wins, the brand has its own playbook inside the playbook.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">08</div>
+        <div class="principle-title">AI generates. Strategist frames. Human decides.</div>
+        <div class="principle-body">AI is non-deterministic and has no taste. The strategist applies frameworks. The human picks winners. Never confuse the three.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">09</div>
+        <div class="principle-title">The cheapest iteration loop wins</div>
+        <div class="principle-body">Brief = $0. Generated asset = $5. Composed = $50. Launched = $500. Catch errors at the brief stage. Pre-validate everything.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">10</div>
+        <div class="principle-title">Reference beats imagination</div>
+        <div class="principle-body">Every winning ad cites a real reference. Find what's working. Feed it. Generate variations. Pure-imagination prompts produce slop.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPERATORS ============ -->
+  <section class="section" id="operators">
+    <div class="section-header">
+      <div class="section-num">07 — OPERATORS</div>
+      <div>
+        <h2 class="section-title">Reference library</h2>
+        <p class="section-lede">8 operators with combined billions in ad spend. We borrow what's relevant, remix freely, and never feel constrained to copy any single playbook. The Director of Research monitors all 8 every 4 days.</p>
+      </div>
+    </div>
+
+    <div class="operator-grid">
+      <div class="operator">
+        <div class="operator-name">Oren John</div>
+        <div class="operator-tag">Quality &amp; Brand</div>
+        <div class="operator-quote">"Creative is the customer experience design — every touchpoint, not isolated assets."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Sabrina Ramonov</div>
+        <div class="operator-tag">Prompt Chains</div>
+        <div class="operator-quote">"Brainstorm 30 viral hooks at a time and choose the one that jumps out."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Chase Chappell</div>
+        <div class="operator-tag">DOE / Closed-Loop</div>
+        <div class="operator-quote">"Systematized creative briefs + repeatable launch SOPs over one-off bursts."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Dara Denney</div>
+        <div class="operator-tag">Sprint Discipline</div>
+        <div class="operator-quote">"Creative freedom is a myth. Attack the sources of ambiguity."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Barry Hott</div>
+        <div class="operator-tag">Ugly Ads</div>
+        <div class="operator-quote">"Move upstream to people, desires, stories. Use AI to parse the data."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Nick Theriot</div>
+        <div class="operator-tag">3 Positioning Paths</div>
+        <div class="operator-quote">"Same Mechanism Better. New Mechanism. Identity Callout. Pick one."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Charley Tichenor</div>
+        <div class="operator-tag">3:2:2 Method</div>
+        <div class="operator-quote">"Stop fighting the machine. Feed it what it needs — clean signal, dynamic creative."</div>
+      </div>
+      <div class="operator">
+        <div class="operator-name">Aazar Shad</div>
+        <div class="operator-tag">Quantitative DTC</div>
+        <div class="operator-quote">"Pattern interrupt + social proof + ego bait in the first second. Test methodically."</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DOCS ============ -->
+  <section class="section" id="docs">
+    <div class="section-header">
+      <div class="section-num">08 — DOCS</div>
+      <div>
+        <h2 class="section-title">Document library</h2>
+        <p class="section-lede">Six master reference docs. Read in order or jump to what you need. Each doc is a layer of the operating system.</p>
+      </div>
+    </div>
+
+    <ul class="docs-list">
+      <li>
+        <span class="doc-num">DOC 01</span>
+        <span class="doc-name">CREATIVE-OS-CONTEXT — The mission, infrastructure, and tool universe</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 02</span>
+        <span class="doc-name">CREATIVE-OS-EXECUTION-TRENDS — 12 trends, 5-stage model, tool stack per stage</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 03</span>
+        <span class="doc-name">CREATIVE-OS-STRATEGY-LAYER — 10 principles, 6-phase methodology, taxonomies</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 04</span>
+        <span class="doc-name">CREATIVE-OS-AGENT-ARCHITECTURE — Org chart, agent specs, workflow, bootstrap</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 05</span>
+        <span class="doc-name">CREATIVE-OS-OPERATOR-PROFILES — 8 profiles, consensus + divergence, SPA pattern</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 06</span>
+        <span class="doc-name">CREATIVE-OS-SKILL-BUILD-ROADMAP — Tier 1/2/3 specs, 4-week build sprint</span>
+        <span class="doc-status">Locked</span>
+      </li>
+      <li>
+        <span class="doc-num">DOC 07</span>
+        <span class="doc-name">HTML Master Reference Visual — This document</span>
+        <span class="doc-status">Live</span>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Build status</div>
+      <div class="callout-text">
+        Architecture is locked. <em>Implementation begins next.</em> Week 1 starts with brand-context-builder. Phase 1 launches in 28 days.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-meta">
+        AI Creative OS<br>
+        Master Reference v1.0<br>
+        Tommy Consulting Brand Pilot<br>
+        Built April 2026
+      </div>
+      <div class="footer-meta">
+        This is a build document. The full architecture lives across 6 markdown files plus this visual reference.<br><br>
+        Hand this to the build team. Walk them through it. Then start with Skill 01.<br><br>
+        The system has its own creative voice — informed by 8 operators, never beholden to any of them. Learn the patterns. Remix freely. Build something more compelling than any single source.
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// Smooth scroll for nav
+document.querySelectorAll('.topbar-nav a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 80,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Intersection observer for fade-in
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.section, .org-card, .stage-card, .tech-card, .principle, .operator').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
