@@ -1,0 +1,2803 @@
+{
+ "source": "https://stefanbrain.com/tools",
+ "captured": "2026-09-28 (America/Chicago)",
+ "method": "Playwright headless Chromium on live pages; inputs typed into on-page fields; outputs scraped from rendered DOM. Analytics beacons blocked.",
+ "format_notes": "expected values are the exact live display strings. Keys: 'headline:<label>' = big result number; 'li:<label>' = pipeline row; 'text:<id>' = string that must appear in the result panel; other keys = stat label. Visual explore sliders left at their defaults (see formulas.md). The source shows an em-dash character for non-finite results (division by zero); a DOE build may assert a DOE-styled placeholder instead. Rounding: money/count follow Intl.NumberFormat (shortest-decimal, half away from zero), percent/ratio follow Number.toFixed (exact binary); verify/ref.py reproduces all vectors.",
+ "tools": [
+  {
+   "tool_id": "ad-spend-calculator",
+   "name": "Ad Spend Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "budget": 10000,
+      "cpm": 28,
+      "ctrPct": 1.5,
+      "cvrPct": 3,
+      "aov": 80
+     },
+     "expected": {
+      "headline:Projected ROAS": "1.29",
+      "li:Budget": "$10,000",
+      "li:Impressions": "357,143",
+      "li:Link clicks": "5,357",
+      "li:Orders": "161",
+      "li:Revenue": "$12,857",
+      "Cost per acquisition": "$62.22",
+      "Cost per link click": "$1.87"
+     },
+     "formula_output": {
+      "headline:Projected ROAS": "1.29",
+      "li:Budget": "$10,000",
+      "li:Impressions": "357,143",
+      "li:Link clicks": "5,357",
+      "li:Orders": "161",
+      "li:Revenue": "$12,857",
+      "Cost per acquisition": "$62.22",
+      "Cost per link click": "$1.87"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "budget": 3000,
+      "cpm": 32,
+      "ctrPct": 1.2,
+      "cvrPct": 2.5,
+      "aov": 60
+     },
+     "expected": {
+      "headline:Projected ROAS": "0.56",
+      "li:Budget": "$3,000",
+      "li:Impressions": "93,750",
+      "li:Link clicks": "1,125",
+      "li:Orders": "28",
+      "li:Revenue": "$1,688",
+      "Cost per acquisition": "$106.67",
+      "Cost per link click": "$2.67"
+     },
+     "formula_output": {
+      "headline:Projected ROAS": "0.56",
+      "li:Budget": "$3,000",
+      "li:Impressions": "93,750",
+      "li:Link clicks": "1,125",
+      "li:Orders": "28",
+      "li:Revenue": "$1,688",
+      "Cost per acquisition": "$106.67",
+      "Cost per link click": "$2.67"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "budget": 50000,
+      "cpm": 26,
+      "ctrPct": 1.8,
+      "cvrPct": 3.2,
+      "aov": 90
+     },
+     "expected": {
+      "headline:Projected ROAS": "1.99",
+      "li:Budget": "$50,000",
+      "li:Impressions": "1,923,077",
+      "li:Link clicks": "34,615",
+      "li:Orders": "1,108",
+      "li:Revenue": "$99,692",
+      "Cost per acquisition": "$45.14",
+      "Cost per link click": "$1.44"
+     },
+     "formula_output": {
+      "headline:Projected ROAS": "1.99",
+      "li:Budget": "$50,000",
+      "li:Impressions": "1,923,077",
+      "li:Link clicks": "34,615",
+      "li:Orders": "1,108",
+      "li:Revenue": "$99,692",
+      "Cost per acquisition": "$45.14",
+      "Cost per link click": "$1.44"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "budget": 7777,
+      "cpm": 41.25,
+      "ctrPct": 0.9,
+      "cvrPct": 1.7,
+      "aov": 123.45
+     },
+     "expected": {
+      "headline:Projected ROAS": "0.46",
+      "li:Budget": "$7,777",
+      "li:Impressions": "188,533",
+      "li:Link clicks": "1,697",
+      "li:Orders": "29",
+      "li:Revenue": "$3,561",
+      "Cost per acquisition": "$269.61",
+      "Cost per link click": "$4.58"
+     },
+     "formula_output": {
+      "headline:Projected ROAS": "0.46",
+      "li:Budget": "$7,777",
+      "li:Impressions": "188,533",
+      "li:Link clicks": "1,697",
+      "li:Orders": "29",
+      "li:Revenue": "$3,561",
+      "Cost per acquisition": "$269.61",
+      "Cost per link click": "$4.58"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ad-budget-calculator",
+   "name": "Ad Budget Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "revenueGoal": 50000,
+      "aov": 80,
+      "cvrPct": 3,
+      "cpc": 1.87
+     },
+     "expected": {
+      "headline:Required ad budget": "$38,958",
+      "Orders needed": "625",
+      "Clicks needed": "20,833",
+      "Implied CPA": "$62.33",
+      "Implied ROAS": "1.28×",
+      "text:daily": "$1,299"
+     },
+     "formula_output": {
+      "headline:Required ad budget": "$38,958",
+      "Orders needed": "625",
+      "Clicks needed": "20,833",
+      "Implied CPA": "$62.33",
+      "Implied ROAS": "1.28×",
+      "text:daily": "$1,299"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenueGoal": 10000,
+      "aov": 60,
+      "cvrPct": 2.5,
+      "cpc": 1.2
+     },
+     "expected": {
+      "headline:Required ad budget": "$8,000",
+      "Orders needed": "167",
+      "Clicks needed": "6,667",
+      "Implied CPA": "$48.00",
+      "Implied ROAS": "1.25×",
+      "text:daily": "$267"
+     },
+     "formula_output": {
+      "headline:Required ad budget": "$8,000",
+      "Orders needed": "167",
+      "Clicks needed": "6,667",
+      "Implied CPA": "$48.00",
+      "Implied ROAS": "1.25×",
+      "text:daily": "$267"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenueGoal": 250000,
+      "aov": 90,
+      "cvrPct": 3.2,
+      "cpc": 1.6
+     },
+     "expected": {
+      "headline:Required ad budget": "$138,889",
+      "Orders needed": "2,778",
+      "Clicks needed": "86,806",
+      "Implied CPA": "$50.00",
+      "Implied ROAS": "1.80×",
+      "text:daily": "$4,630"
+     },
+     "formula_output": {
+      "headline:Required ad budget": "$138,889",
+      "Orders needed": "2,778",
+      "Clicks needed": "86,806",
+      "Implied CPA": "$50.00",
+      "Implied ROAS": "1.80×",
+      "text:daily": "$4,630"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenueGoal": 33333,
+      "aov": 47.5,
+      "cvrPct": 1.9,
+      "cpc": 0.95
+     },
+     "expected": {
+      "headline:Required ad budget": "$35,087",
+      "Orders needed": "702",
+      "Clicks needed": "36,934",
+      "Implied CPA": "$50.00",
+      "Implied ROAS": "0.95×",
+      "text:daily": "$1,170"
+     },
+     "formula_output": {
+      "headline:Required ad budget": "$35,087",
+      "Orders needed": "702",
+      "Clicks needed": "36,934",
+      "Implied CPA": "$50.00",
+      "Implied ROAS": "0.95×",
+      "text:daily": "$1,170"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "roas-calculator",
+   "name": "ROAS Calculator",
+   "vectors": [
+    {
+     "mode": "roas",
+     "inputs": {
+      "revenue": 25000,
+      "spend": 10000
+     },
+     "expected": {
+      "headline:ROAS": "2.50",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$5,000",
+      "Revenue per $1": "$2.50",
+      "Spend share": "40.0%"
+     },
+     "formula_output": {
+      "headline:ROAS": "2.50",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$5,000",
+      "Revenue per $1": "$2.50",
+      "Spend share": "40.0%"
+     },
+     "match": true
+    },
+    {
+     "mode": "roas",
+     "inputs": {
+      "revenue": 18000,
+      "spend": 10000
+     },
+     "expected": {
+      "headline:ROAS": "1.80",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$12,000",
+      "Revenue per $1": "$1.80",
+      "Spend share": "55.6%"
+     },
+     "formula_output": {
+      "headline:ROAS": "1.80",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$12,000",
+      "Revenue per $1": "$1.80",
+      "Spend share": "55.6%"
+     },
+     "match": true
+    },
+    {
+     "mode": "roas",
+     "inputs": {
+      "revenue": 73250.5,
+      "spend": 12345
+     },
+     "expected": {
+      "headline:ROAS": "5.93",
+      "Revenue at target": "$37,035",
+      "Revenue gap to target": "-$36,216",
+      "Revenue per $1": "$5.93",
+      "Spend share": "16.9%"
+     },
+     "formula_output": {
+      "headline:ROAS": "5.93",
+      "Revenue at target": "$37,035",
+      "Revenue gap to target": "-$36,216",
+      "Revenue per $1": "$5.93",
+      "Spend share": "16.9%"
+     },
+     "match": true
+    },
+    {
+     "mode": "allowed-spend",
+     "inputs": {
+      "revenue": 50000,
+      "targetRoas": 2.5
+     },
+     "expected": {
+      "headline:Allowed spend": "$20,000.00",
+      "Revenue at target": "$60,000",
+      "Revenue gap to target": "$10,000",
+      "Revenue per $1": "$2.50",
+      "Spend share": "40.0%"
+     },
+     "formula_output": {
+      "headline:Allowed spend": "$20,000.00",
+      "Revenue at target": "$60,000",
+      "Revenue gap to target": "$10,000",
+      "Revenue per $1": "$2.50",
+      "Spend share": "40.0%"
+     },
+     "match": true
+    },
+    {
+     "mode": "allowed-spend",
+     "inputs": {
+      "revenue": 12000,
+      "targetRoas": 3.7
+     },
+     "expected": {
+      "headline:Allowed spend": "$3,243.24",
+      "Revenue at target": "$9,730",
+      "Revenue gap to target": "-$2,270",
+      "Revenue per $1": "$3.70",
+      "Spend share": "27.0%"
+     },
+     "formula_output": {
+      "headline:Allowed spend": "$3,243.24",
+      "Revenue at target": "$9,730",
+      "Revenue gap to target": "-$2,270",
+      "Revenue per $1": "$3.70",
+      "Spend share": "27.0%"
+     },
+     "match": true
+    },
+    {
+     "mode": "roas",
+     "inputs": {
+      "revenue": 10050,
+      "spend": 10000
+     },
+     "expected": {
+      "headline:ROAS": "1.00",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$19,950",
+      "Revenue per $1": "$1.01",
+      "Spend share": "99.5%"
+     },
+     "formula_output": {
+      "headline:ROAS": "1.00",
+      "Revenue at target": "$30,000",
+      "Revenue gap to target": "$19,950",
+      "Revenue per $1": "$1.01",
+      "Spend share": "99.5%"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "breakeven-roas-calculator",
+   "name": "Break-Even ROAS Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 80,
+      "cogs": 22,
+      "shipping": 8,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 2
+     },
+     "expected": {
+      "headline:Break-even ROAS": "1.76",
+      "Profit per order": "$18.71",
+      "Ad spend per order": "$26.67",
+      "Net margin": "23.4%",
+      "Break-even ROAS": "1.76×"
+     },
+     "formula_output": {
+      "headline:Break-even ROAS": "1.76",
+      "Profit per order": "$18.71",
+      "Ad spend per order": "$26.67",
+      "Net margin": "23.4%",
+      "Break-even ROAS": "1.76×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 60,
+      "cogs": 27,
+      "shipping": 9,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 3
+     },
+     "expected": {
+      "headline:Break-even ROAS": "3.16",
+      "Profit per order": "-$1.04",
+      "Ad spend per order": "$20.00",
+      "Net margin": "-1.7%",
+      "Break-even ROAS": "3.16×"
+     },
+     "formula_output": {
+      "headline:Break-even ROAS": "3.16",
+      "Profit per order": "-$1.04",
+      "Ad spend per order": "$20.00",
+      "Net margin": "-1.7%",
+      "Break-even ROAS": "3.16×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 140,
+      "cogs": 30,
+      "shipping": 10,
+      "processingRatePct": 3.5,
+      "processingFixed": 0.5,
+      "otherVariable": 4
+     },
+     "expected": {
+      "headline:Break-even ROAS": "1.55",
+      "Profit per order": "$43.93",
+      "Ad spend per order": "$46.67",
+      "Net margin": "31.4%",
+      "Break-even ROAS": "1.55×"
+     },
+     "formula_output": {
+      "headline:Break-even ROAS": "1.55",
+      "Profit per order": "$43.93",
+      "Ad spend per order": "$46.67",
+      "Net margin": "31.4%",
+      "Break-even ROAS": "1.55×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 50,
+      "cogs": 35,
+      "shipping": 12,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 3
+     },
+     "expected": {
+      "headline:Break-even ROAS": "—"
+     },
+     "formula_output": {
+      "headline:Break-even ROAS": "—"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "mer-calculator",
+   "name": "MER Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "totalRevenue": 180000,
+      "totalAdSpend": 45000
+     },
+     "expected": {
+      "headline:MER": "4.00",
+      "All ad spend": "$45,000",
+      "Revenue per ad dollar": "$4.00",
+      "text:store": "$180,000",
+      "text:mer": "4.00× MER"
+     },
+     "formula_output": {
+      "headline:MER": "4.00",
+      "All ad spend": "$45,000",
+      "Revenue per ad dollar": "$4.00",
+      "text:store": "$180,000",
+      "text:mer": "4.00× MER"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "totalRevenue": 90000,
+      "totalAdSpend": 45000
+     },
+     "expected": {
+      "headline:MER": "2.00",
+      "All ad spend": "$45,000",
+      "Revenue per ad dollar": "$2.00",
+      "text:store": "$90,000",
+      "text:mer": "2.00× MER"
+     },
+     "formula_output": {
+      "headline:MER": "2.00",
+      "All ad spend": "$45,000",
+      "Revenue per ad dollar": "$2.00",
+      "text:store": "$90,000",
+      "text:mer": "2.00× MER"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "totalRevenue": 412345,
+      "totalAdSpend": 65432
+     },
+     "expected": {
+      "headline:MER": "6.30",
+      "All ad spend": "$65,432",
+      "Revenue per ad dollar": "$6.30",
+      "text:store": "$412,345",
+      "text:mer": "6.30× MER"
+     },
+     "formula_output": {
+      "headline:MER": "6.30",
+      "All ad spend": "$65,432",
+      "Revenue per ad dollar": "$6.30",
+      "text:store": "$412,345",
+      "text:mer": "6.30× MER"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "cpa-calculator",
+   "name": "CPA Calculator",
+   "vectors": [
+    {
+     "mode": "cpa",
+     "inputs": {
+      "spend": 5000,
+      "conversions": 80
+     },
+     "expected": {
+      "headline:Cost per acquisition": "$62.50",
+      "Conversions per $1,000": "16",
+      "Total acquisition spend": "$5,000",
+      "text:cpc": "$62.50"
+     },
+     "formula_output": {
+      "headline:Cost per acquisition": "$62.50",
+      "Conversions per $1,000": "16",
+      "Total acquisition spend": "$5,000",
+      "text:cpc": "$62.50"
+     },
+     "match": true
+    },
+    {
+     "mode": "cpa",
+     "inputs": {
+      "spend": 2000,
+      "conversions": 160
+     },
+     "expected": {
+      "headline:Cost per acquisition": "$12.50",
+      "Conversions per $1,000": "80",
+      "Total acquisition spend": "$2,000",
+      "text:cpc": "$12.50"
+     },
+     "formula_output": {
+      "headline:Cost per acquisition": "$12.50",
+      "Conversions per $1,000": "80",
+      "Total acquisition spend": "$2,000",
+      "text:cpc": "$12.50"
+     },
+     "match": true
+    },
+    {
+     "mode": "cpa",
+     "inputs": {
+      "spend": 12345,
+      "conversions": 97
+     },
+     "expected": {
+      "headline:Cost per acquisition": "$127.27",
+      "Conversions per $1,000": "7.9",
+      "Total acquisition spend": "$12,345",
+      "text:cpc": "$127.27"
+     },
+     "formula_output": {
+      "headline:Cost per acquisition": "$127.27",
+      "Conversions per $1,000": "7.9",
+      "Total acquisition spend": "$12,345",
+      "text:cpc": "$127.27"
+     },
+     "match": true
+    },
+    {
+     "mode": "conversions",
+     "inputs": {
+      "budget": 7500,
+      "targetCpa": 45
+     },
+     "expected": {
+      "headline:Conversions at target": "166.7",
+      "Conversions per $1,000": "22.2",
+      "Total acquisition spend": "$7,500",
+      "text:cpc": "$45.00"
+     },
+     "formula_output": {
+      "headline:Conversions at target": "166.7",
+      "Conversions per $1,000": "22.2",
+      "Total acquisition spend": "$7,500",
+      "text:cpc": "$45.00"
+     },
+     "match": true
+    },
+    {
+     "mode": "budget",
+     "inputs": {
+      "targetCpa": 38.5,
+      "conversionsGoal": 250
+     },
+     "expected": {
+      "headline:Budget required": "$9,625",
+      "Conversions per $1,000": "26",
+      "Total acquisition spend": "$9,625",
+      "text:cpc": "$38.50"
+     },
+     "formula_output": {
+      "headline:Budget required": "$9,625",
+      "Conversions per $1,000": "26",
+      "Total acquisition spend": "$9,625",
+      "text:cpc": "$38.50"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "cpm-calculator",
+   "name": "CPM Calculator",
+   "vectors": [
+    {
+     "mode": "cpm",
+     "inputs": {
+      "spend": 4200,
+      "impressions": 150000
+     },
+     "expected": {
+      "headline:CPM": "$28.00",
+      "Blocks of 1,000": "150",
+      "Total impressions": "150,000",
+      "Total spend": "$4,200",
+      "Single impression": "$0.0280"
+     },
+     "formula_output": {
+      "headline:CPM": "$28.00",
+      "Blocks of 1,000": "150",
+      "Total impressions": "150,000",
+      "Total spend": "$4,200",
+      "Single impression": "$0.0280"
+     },
+     "match": true
+    },
+    {
+     "mode": "cpm",
+     "inputs": {
+      "spend": 9000,
+      "impressions": 180000
+     },
+     "expected": {
+      "headline:CPM": "$50.00",
+      "Blocks of 1,000": "180",
+      "Total impressions": "180,000",
+      "Total spend": "$9,000",
+      "Single impression": "$0.0500"
+     },
+     "formula_output": {
+      "headline:CPM": "$50.00",
+      "Blocks of 1,000": "180",
+      "Total impressions": "180,000",
+      "Total spend": "$9,000",
+      "Single impression": "$0.0500"
+     },
+     "match": true
+    },
+    {
+     "mode": "cpm",
+     "inputs": {
+      "spend": 1234,
+      "impressions": 98765
+     },
+     "expected": {
+      "headline:CPM": "$12.49",
+      "Blocks of 1,000": "98.8",
+      "Total impressions": "98,765",
+      "Total spend": "$1,234",
+      "Single impression": "$0.0125"
+     },
+     "formula_output": {
+      "headline:CPM": "$12.49",
+      "Blocks of 1,000": "98.8",
+      "Total impressions": "98,765",
+      "Total spend": "$1,234",
+      "Single impression": "$0.0125"
+     },
+     "match": true
+    },
+    {
+     "mode": "spend",
+     "inputs": {
+      "cpm": 31.5,
+      "impressions": 420000
+     },
+     "expected": {
+      "headline:Spend": "$13,230",
+      "Blocks of 1,000": "420",
+      "Total impressions": "420,000",
+      "Total spend": "$13,230",
+      "Single impression": "$0.0315"
+     },
+     "formula_output": {
+      "headline:Spend": "$13,230",
+      "Blocks of 1,000": "420",
+      "Total impressions": "420,000",
+      "Total spend": "$13,230",
+      "Single impression": "$0.0315"
+     },
+     "match": true
+    },
+    {
+     "mode": "impressions",
+     "inputs": {
+      "spend": 5000,
+      "cpm": 22
+     },
+     "expected": {
+      "headline:Impressions": "227,273",
+      "Blocks of 1,000": "227.3",
+      "Total impressions": "227,273",
+      "Total spend": "$5,000",
+      "Single impression": "$0.0220"
+     },
+     "formula_output": {
+      "headline:Impressions": "227,273",
+      "Blocks of 1,000": "227.3",
+      "Total impressions": "227,273",
+      "Total spend": "$5,000",
+      "Single impression": "$0.0220"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "cpc-calculator",
+   "name": "CPC Calculator",
+   "vectors": [
+    {
+     "mode": "spend",
+     "inputs": {
+      "spend": 2400,
+      "clicks": 1284
+     },
+     "expected": {
+      "headline:Cost per click": "$1.87",
+      "Per link click": "$1.87",
+      "Clicks per $100": "54",
+      "text:clicks": "54"
+     },
+     "formula_output": {
+      "headline:Cost per click": "$1.87",
+      "Per link click": "$1.87",
+      "Clicks per $100": "54",
+      "text:clicks": "54"
+     },
+     "match": true
+    },
+    {
+     "mode": "spend",
+     "inputs": {
+      "spend": 987.65,
+      "clicks": 321
+     },
+     "expected": {
+      "headline:Cost per click": "$3.08",
+      "Per link click": "$3.08",
+      "Clicks per $100": "33",
+      "text:clicks": "33"
+     },
+     "formula_output": {
+      "headline:Cost per click": "$3.08",
+      "Per link click": "$3.08",
+      "Clicks per $100": "33",
+      "text:clicks": "33"
+     },
+     "match": true
+    },
+    {
+     "mode": "spend",
+     "inputs": {
+      "spend": 15000,
+      "clicks": 11250
+     },
+     "expected": {
+      "headline:Cost per click": "$1.33",
+      "Per link click": "$1.33",
+      "Clicks per $100": "75",
+      "text:clicks": "75"
+     },
+     "formula_output": {
+      "headline:Cost per click": "$1.33",
+      "Per link click": "$1.33",
+      "Clicks per $100": "75",
+      "text:clicks": "75"
+     },
+     "match": true
+    },
+    {
+     "mode": "auction",
+     "inputs": {
+      "cpm": 24,
+      "ctrPct": 2
+     },
+     "expected": {
+      "headline:Cost per click": "$1.20",
+      "Per link click": "$1.20",
+      "Clicks per $100": "83",
+      "text:clicks": "83"
+     },
+     "formula_output": {
+      "headline:Cost per click": "$1.20",
+      "Per link click": "$1.20",
+      "Clicks per $100": "83",
+      "text:clicks": "83"
+     },
+     "match": true
+    },
+    {
+     "mode": "auction",
+     "inputs": {
+      "cpm": 38,
+      "ctrPct": 0.8
+     },
+     "expected": {
+      "headline:Cost per click": "$4.75",
+      "Per link click": "$4.75",
+      "Clicks per $100": "21",
+      "text:clicks": "21"
+     },
+     "formula_output": {
+      "headline:Cost per click": "$4.75",
+      "Per link click": "$4.75",
+      "Clicks per $100": "21",
+      "text:clicks": "21"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ctr-calculator",
+   "name": "CTR Calculator",
+   "vectors": [
+    {
+     "mode": "ctr",
+     "inputs": {
+      "clicks": 5357,
+      "impressions": 357143
+     },
+     "expected": {
+      "headline:Link CTR": "1.50%",
+      "Link clicks": "5,357",
+      "Impressions": "357,143",
+      "text:per1000": "15"
+     },
+     "formula_output": {
+      "headline:Link CTR": "1.50%",
+      "Link clicks": "5,357",
+      "Impressions": "357,143",
+      "text:per1000": "15"
+     },
+     "match": true
+    },
+    {
+     "mode": "ctr",
+     "inputs": {
+      "clicks": 2100,
+      "impressions": 300000
+     },
+     "expected": {
+      "headline:Link CTR": "0.70%",
+      "Link clicks": "2,100",
+      "Impressions": "300,000",
+      "text:per1000": "7"
+     },
+     "formula_output": {
+      "headline:Link CTR": "0.70%",
+      "Link clicks": "2,100",
+      "Impressions": "300,000",
+      "text:per1000": "7"
+     },
+     "match": true
+    },
+    {
+     "mode": "ctr",
+     "inputs": {
+      "clicks": 11000,
+      "impressions": 400000
+     },
+     "expected": {
+      "headline:Link CTR": "2.75%",
+      "Link clicks": "11,000",
+      "Impressions": "400,000",
+      "text:per1000": "27.5"
+     },
+     "formula_output": {
+      "headline:Link CTR": "2.75%",
+      "Link clicks": "11,000",
+      "Impressions": "400,000",
+      "text:per1000": "27.5"
+     },
+     "match": true
+    },
+    {
+     "mode": "clicks",
+     "inputs": {
+      "planImpressions": 500000,
+      "planCtrPct": 2.8
+     },
+     "expected": {
+      "headline:Expected clicks": "14,000",
+      "Link clicks": "14,000",
+      "Impressions": "500,000",
+      "text:per1000": "28"
+     },
+     "formula_output": {
+      "headline:Expected clicks": "14,000",
+      "Link clicks": "14,000",
+      "Impressions": "500,000",
+      "text:per1000": "28"
+     },
+     "match": true
+    },
+    {
+     "mode": "clicks",
+     "inputs": {
+      "planImpressions": 123456,
+      "planCtrPct": 0.7
+     },
+     "expected": {
+      "headline:Expected clicks": "864",
+      "Link clicks": "864",
+      "Impressions": "123,456",
+      "text:per1000": "7"
+     },
+     "formula_output": {
+      "headline:Expected clicks": "864",
+      "Link clicks": "864",
+      "Impressions": "123,456",
+      "text:per1000": "7"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "conversion-rate-calculator",
+   "name": "Conversion Rate Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "orders": 161,
+      "sessions": 5357,
+      "aov": 80
+     },
+     "expected": {
+      "headline:Conversion rate": "3.01%",
+      "Revenue": "$12,880",
+      "Revenue per session": "$2.40",
+      "Orders per 1,000 sessions": "30.1",
+      "Revenue at +0.5pt": "$15,023"
+     },
+     "formula_output": {
+      "headline:Conversion rate": "3.01%",
+      "Revenue": "$12,880",
+      "Revenue per session": "$2.40",
+      "Orders per 1,000 sessions": "30.1",
+      "Revenue at +0.5pt": "$15,023"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "orders": 80,
+      "sessions": 5000,
+      "aov": 70
+     },
+     "expected": {
+      "headline:Conversion rate": "1.60%",
+      "Revenue": "$5,600",
+      "Revenue per session": "$1.12",
+      "Orders per 1,000 sessions": "16",
+      "Revenue at +0.5pt": "$7,350"
+     },
+     "formula_output": {
+      "headline:Conversion rate": "1.60%",
+      "Revenue": "$5,600",
+      "Revenue per session": "$1.12",
+      "Orders per 1,000 sessions": "16",
+      "Revenue at +0.5pt": "$7,350"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "orders": 333,
+      "sessions": 9876,
+      "aov": 64.5
+     },
+     "expected": {
+      "headline:Conversion rate": "3.37%",
+      "Revenue": "$21,479",
+      "Revenue per session": "$2.17",
+      "Orders per 1,000 sessions": "33.7",
+      "Revenue at +0.5pt": "$24,664"
+     },
+     "formula_output": {
+      "headline:Conversion rate": "3.37%",
+      "Revenue": "$21,479",
+      "Revenue per session": "$2.17",
+      "Orders per 1,000 sessions": "33.7",
+      "Revenue at +0.5pt": "$24,664"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ad-frequency-calculator",
+   "name": "Ad Frequency Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "impressions": 357143,
+      "reach": 118000
+     },
+     "expected": {
+      "headline:Frequency": "3.0",
+      "People reached": "118,000",
+      "Ad impressions": "357,143",
+      "Repeat impressions": "239,143",
+      "First exposure share": "33.0%"
+     },
+     "formula_output": {
+      "headline:Frequency": "3.0",
+      "People reached": "118,000",
+      "Ad impressions": "357,143",
+      "Repeat impressions": "239,143",
+      "First exposure share": "33.0%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "impressions": 200000,
+      "reach": 150000
+     },
+     "expected": {
+      "headline:Frequency": "1.3",
+      "People reached": "150,000",
+      "Ad impressions": "200,000",
+      "Repeat impressions": "50,000",
+      "First exposure share": "75.0%"
+     },
+     "formula_output": {
+      "headline:Frequency": "1.3",
+      "People reached": "150,000",
+      "Ad impressions": "200,000",
+      "Repeat impressions": "50,000",
+      "First exposure share": "75.0%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "impressions": 900000,
+      "reach": 160000
+     },
+     "expected": {
+      "headline:Frequency": "5.6",
+      "People reached": "160,000",
+      "Ad impressions": "900,000",
+      "Repeat impressions": "740,000",
+      "First exposure share": "17.8%"
+     },
+     "formula_output": {
+      "headline:Frequency": "5.6",
+      "People reached": "160,000",
+      "Ad impressions": "900,000",
+      "Repeat impressions": "740,000",
+      "First exposure share": "17.8%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "impressions": 1000,
+      "reach": 5000
+     },
+     "expected": {
+      "headline:Frequency": "0.2"
+     },
+     "formula_output": {
+      "headline:Frequency": "0.2"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "hook-rate-calculator",
+   "name": "Hook Rate Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "threeSecondPlays": 85000,
+      "impressions": 357143,
+      "thruPlays": 15000
+     },
+     "expected": {
+      "headline:Hook rate": "23.80%",
+      "Hook rate": "23.80%",
+      "Hold rate": "17.65%",
+      "3s plays per 1,000": "238"
+     },
+     "formula_output": {
+      "headline:Hook rate": "23.80%",
+      "Hook rate": "23.80%",
+      "Hold rate": "17.65%",
+      "3s plays per 1,000": "238"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "threeSecondPlays": 30000,
+      "impressions": 350000,
+      "thruPlays": 4000
+     },
+     "expected": {
+      "headline:Hook rate": "8.57%",
+      "Hook rate": "8.57%",
+      "Hold rate": "13.33%",
+      "3s plays per 1,000": "85.7"
+     },
+     "formula_output": {
+      "headline:Hook rate": "8.57%",
+      "Hook rate": "8.57%",
+      "Hold rate": "13.33%",
+      "3s plays per 1,000": "85.7"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "threeSecondPlays": 120000,
+      "impressions": 360000,
+      "thruPlays": 30000
+     },
+     "expected": {
+      "headline:Hook rate": "33.33%",
+      "Hook rate": "33.33%",
+      "Hold rate": "25.00%",
+      "3s plays per 1,000": "333.3"
+     },
+     "formula_output": {
+      "headline:Hook rate": "33.33%",
+      "Hook rate": "33.33%",
+      "Hold rate": "25.00%",
+      "3s plays per 1,000": "333.3"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "acos-calculator",
+   "name": "ACoS Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "adSpend": 3000,
+      "adRevenue": 12000,
+      "totalRevenue": 30000,
+      "contributionMarginPct": 40
+     },
+     "expected": {
+      "headline:ACoS": "25.0%",
+      "Break-even ACoS": "40%",
+      "Headroom": "15.0 pts",
+      "TACoS": "10.0%",
+      "ROAS equivalent": "4.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$3,000.00"
+     },
+     "formula_output": {
+      "headline:ACoS": "25.0%",
+      "Break-even ACoS": "40%",
+      "Headroom": "15.0 pts",
+      "TACoS": "10.0%",
+      "ROAS equivalent": "4.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$3,000.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "adSpend": 2000,
+      "adRevenue": 12000,
+      "totalRevenue": 30000,
+      "contributionMarginPct": 40
+     },
+     "expected": {
+      "headline:ACoS": "16.7%",
+      "Break-even ACoS": "40%",
+      "Headroom": "23.3 pts",
+      "TACoS": "6.7%",
+      "ROAS equivalent": "6.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$2,000.00"
+     },
+     "formula_output": {
+      "headline:ACoS": "16.7%",
+      "Break-even ACoS": "40%",
+      "Headroom": "23.3 pts",
+      "TACoS": "6.7%",
+      "ROAS equivalent": "6.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$2,000.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "adSpend": 6000,
+      "adRevenue": 12000,
+      "totalRevenue": 20000,
+      "contributionMarginPct": 35
+     },
+     "expected": {
+      "headline:ACoS": "50.0%",
+      "Break-even ACoS": "35%",
+      "Headroom": "-15.0 pts",
+      "TACoS": "30.0%",
+      "ROAS equivalent": "2.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$6,000.00"
+     },
+     "formula_output": {
+      "headline:ACoS": "50.0%",
+      "Break-even ACoS": "35%",
+      "Headroom": "-15.0 pts",
+      "TACoS": "30.0%",
+      "ROAS equivalent": "2.00×",
+      "Ad-attributed sales": "$12,000.00",
+      "Advertising": "-$6,000.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "adSpend": 1234,
+      "adRevenue": 5678,
+      "totalRevenue": 23456,
+      "contributionMarginPct": 27
+     },
+     "expected": {
+      "headline:ACoS": "21.7%",
+      "Break-even ACoS": "27%",
+      "Headroom": "5.3 pts",
+      "TACoS": "5.3%",
+      "ROAS equivalent": "4.60×",
+      "Ad-attributed sales": "$5,678.00",
+      "Advertising": "-$1,234.00"
+     },
+     "formula_output": {
+      "headline:ACoS": "21.7%",
+      "Break-even ACoS": "27%",
+      "Headroom": "5.3 pts",
+      "TACoS": "5.3%",
+      "ROAS equivalent": "4.60×",
+      "Ad-attributed sales": "$5,678.00",
+      "Advertising": "-$1,234.00"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "aov-calculator",
+   "name": "AOV Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 48600,
+      "orders": 610
+     },
+     "expected": {
+      "headline:Average order value": "$79.67",
+      "Orders held constant": "610",
+      "Additional revenue": "$6,100",
+      "Scenario revenue": "$54,700",
+      "Current revenue": "$48,600"
+     },
+     "formula_output": {
+      "headline:Average order value": "$79.67",
+      "Orders held constant": "610",
+      "Additional revenue": "$6,100",
+      "Scenario revenue": "$54,700",
+      "Current revenue": "$48,600"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 30000,
+      "orders": 520
+     },
+     "expected": {
+      "headline:Average order value": "$57.69",
+      "Orders held constant": "520",
+      "Additional revenue": "$5,200",
+      "Scenario revenue": "$35,200",
+      "Current revenue": "$30,000"
+     },
+     "formula_output": {
+      "headline:Average order value": "$57.69",
+      "Orders held constant": "520",
+      "Additional revenue": "$5,200",
+      "Scenario revenue": "$35,200",
+      "Current revenue": "$30,000"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 96000,
+      "orders": 800
+     },
+     "expected": {
+      "headline:Average order value": "$120.00",
+      "Orders held constant": "800",
+      "Additional revenue": "$8,000",
+      "Scenario revenue": "$104,000",
+      "Current revenue": "$96,000"
+     },
+     "formula_output": {
+      "headline:Average order value": "$120.00",
+      "Orders held constant": "800",
+      "Additional revenue": "$8,000",
+      "Scenario revenue": "$104,000",
+      "Current revenue": "$96,000"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 12345.67,
+      "orders": 89
+     },
+     "expected": {
+      "headline:Average order value": "$138.72",
+      "Orders held constant": "89",
+      "Additional revenue": "$890",
+      "Scenario revenue": "$13,236",
+      "Current revenue": "$12,346"
+     },
+     "formula_output": {
+      "headline:Average order value": "$138.72",
+      "Orders held constant": "89",
+      "Additional revenue": "$890",
+      "Scenario revenue": "$13,236",
+      "Current revenue": "$12,346"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "contribution-margin-calculator",
+   "name": "Contribution Margin Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "price": 80,
+      "cogs": 22,
+      "shipping": 8,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 2
+     },
+     "expected": {
+      "headline:Contribution margin per order": "$45.38",
+      "Selling price": "$80.00",
+      "Product cost": "-$22.00",
+      "Shipping & fulfillment": "-$8.00",
+      "Payment processing": "-$2.62",
+      "Other variable costs": "-$2.00",
+      "Contribution rate": "56.7%",
+      "Contribution / 100 orders": "$4,538"
+     },
+     "formula_output": {
+      "headline:Contribution margin per order": "$45.38",
+      "Selling price": "$80.00",
+      "Product cost": "-$22.00",
+      "Shipping & fulfillment": "-$8.00",
+      "Payment processing": "-$2.62",
+      "Other variable costs": "-$2.00",
+      "Contribution rate": "56.7%",
+      "Contribution / 100 orders": "$4,538"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "price": 60,
+      "cogs": 27,
+      "shipping": 9,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 3
+     },
+     "expected": {
+      "headline:Contribution margin per order": "$18.96",
+      "Selling price": "$60.00",
+      "Product cost": "-$27.00",
+      "Shipping & fulfillment": "-$9.00",
+      "Payment processing": "-$2.04",
+      "Other variable costs": "-$3.00",
+      "Contribution rate": "31.6%",
+      "Contribution / 100 orders": "$1,896"
+     },
+     "formula_output": {
+      "headline:Contribution margin per order": "$18.96",
+      "Selling price": "$60.00",
+      "Product cost": "-$27.00",
+      "Shipping & fulfillment": "-$9.00",
+      "Payment processing": "-$2.04",
+      "Other variable costs": "-$3.00",
+      "Contribution rate": "31.6%",
+      "Contribution / 100 orders": "$1,896"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "price": 140,
+      "cogs": 30,
+      "shipping": 10,
+      "processingRatePct": 3.5,
+      "processingFixed": 0.45,
+      "otherVariable": 4
+     },
+     "expected": {
+      "headline:Contribution margin per order": "$90.65",
+      "Selling price": "$140.00",
+      "Product cost": "-$30.00",
+      "Shipping & fulfillment": "-$10.00",
+      "Payment processing": "-$5.35",
+      "Other variable costs": "-$4.00",
+      "Contribution rate": "64.8%",
+      "Contribution / 100 orders": "$9,065"
+     },
+     "formula_output": {
+      "headline:Contribution margin per order": "$90.65",
+      "Selling price": "$140.00",
+      "Product cost": "-$30.00",
+      "Shipping & fulfillment": "-$10.00",
+      "Payment processing": "-$5.35",
+      "Other variable costs": "-$4.00",
+      "Contribution rate": "64.8%",
+      "Contribution / 100 orders": "$9,065"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "price": 25,
+      "cogs": 18,
+      "shipping": 7,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 1
+     },
+     "expected": {
+      "headline:Contribution margin per order": "-$2.03",
+      "Selling price": "$25.00",
+      "Product cost": "-$18.00",
+      "Shipping & fulfillment": "-$7.00",
+      "Payment processing": "-$1.03",
+      "Other variable costs": "-$1.00",
+      "Contribution rate": "-8.1%",
+      "Contribution / 100 orders": "-$203"
+     },
+     "formula_output": {
+      "headline:Contribution margin per order": "-$2.03",
+      "Selling price": "$25.00",
+      "Product cost": "-$18.00",
+      "Shipping & fulfillment": "-$7.00",
+      "Payment processing": "-$1.03",
+      "Other variable costs": "-$1.00",
+      "Contribution rate": "-8.1%",
+      "Contribution / 100 orders": "-$203"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "price": 35,
+      "cogs": 10,
+      "shipping": 5,
+      "processingRatePct": 2.9,
+      "processingFixed": 0.3,
+      "otherVariable": 0
+     },
+     "expected": {
+      "headline:Contribution margin per order": "$18.69",
+      "Selling price": "$35.00",
+      "Product cost": "-$10.00",
+      "Shipping & fulfillment": "-$5.00",
+      "Payment processing": "-$1.32",
+      "Other variable costs": "-$0.00",
+      "Contribution rate": "53.4%",
+      "Contribution / 100 orders": "$1,868"
+     },
+     "formula_output": {
+      "headline:Contribution margin per order": "$18.69",
+      "Selling price": "$35.00",
+      "Product cost": "-$10.00",
+      "Shipping & fulfillment": "-$5.00",
+      "Payment processing": "-$1.32",
+      "Other variable costs": "-$0.00",
+      "Contribution rate": "53.4%",
+      "Contribution / 100 orders": "$1,868"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ltv-calculator",
+   "name": "LTV Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 80,
+      "ordersPerYear": 2.4,
+      "years": 2,
+      "marginRatePct": 55
+     },
+     "expected": {
+      "headline:Margin LTV": "$211.20",
+      "Revenue LTV": "$384.00",
+      "Contribution LTV": "$211.20",
+      "Expected lifetime orders": "4.8",
+      "Contribution per year": "$105.60"
+     },
+     "formula_output": {
+      "headline:Margin LTV": "$211.20",
+      "Revenue LTV": "$384.00",
+      "Contribution LTV": "$211.20",
+      "Expected lifetime orders": "4.8",
+      "Contribution per year": "$105.60"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 80,
+      "ordersPerYear": 1.1,
+      "years": 1,
+      "marginRatePct": 55
+     },
+     "expected": {
+      "headline:Margin LTV": "$48.40",
+      "Revenue LTV": "$88.00",
+      "Contribution LTV": "$48.40",
+      "Expected lifetime orders": "1.1",
+      "Contribution per year": "$48.40"
+     },
+     "formula_output": {
+      "headline:Margin LTV": "$48.40",
+      "Revenue LTV": "$88.00",
+      "Contribution LTV": "$48.40",
+      "Expected lifetime orders": "1.1",
+      "Contribution per year": "$48.40"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 45,
+      "ordersPerYear": 8,
+      "years": 2,
+      "marginRatePct": 60
+     },
+     "expected": {
+      "headline:Margin LTV": "$432.00",
+      "Revenue LTV": "$720.00",
+      "Contribution LTV": "$432.00",
+      "Expected lifetime orders": "16",
+      "Contribution per year": "$216.00"
+     },
+     "formula_output": {
+      "headline:Margin LTV": "$432.00",
+      "Revenue LTV": "$720.00",
+      "Contribution LTV": "$432.00",
+      "Expected lifetime orders": "16",
+      "Contribution per year": "$216.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 67.89,
+      "ordersPerYear": 3.3,
+      "years": 3.5,
+      "marginRatePct": 42
+     },
+     "expected": {
+      "headline:Margin LTV": "$329.33",
+      "Revenue LTV": "$784.13",
+      "Contribution LTV": "$329.33",
+      "Expected lifetime orders": "11.5",
+      "Contribution per year": "$94.10"
+     },
+     "formula_output": {
+      "headline:Margin LTV": "$329.33",
+      "Revenue LTV": "$784.13",
+      "Contribution LTV": "$329.33",
+      "Expected lifetime orders": "11.5",
+      "Contribution per year": "$94.10"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "cac-calculator",
+   "name": "CAC Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "paidSpend": 45000,
+      "otherSmSpend": 12000,
+      "newCustomers": 950
+     },
+     "expected": {
+      "headline:Blended CAC": "$60.00",
+      "Fully loaded CAC": "$60.00",
+      "Paid CAC": "$47.37",
+      "Non-media cost / customer": "$12.63",
+      "Media share of spend": "78.9%"
+     },
+     "formula_output": {
+      "headline:Blended CAC": "$60.00",
+      "Fully loaded CAC": "$60.00",
+      "Paid CAC": "$47.37",
+      "Non-media cost / customer": "$12.63",
+      "Media share of spend": "78.9%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "paidSpend": 60000,
+      "otherSmSpend": 5000,
+      "newCustomers": 800
+     },
+     "expected": {
+      "headline:Blended CAC": "$81.25",
+      "Fully loaded CAC": "$81.25",
+      "Paid CAC": "$75.00",
+      "Non-media cost / customer": "$6.25",
+      "Media share of spend": "92.3%"
+     },
+     "formula_output": {
+      "headline:Blended CAC": "$81.25",
+      "Fully loaded CAC": "$81.25",
+      "Paid CAC": "$75.00",
+      "Non-media cost / customer": "$6.25",
+      "Media share of spend": "92.3%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "paidSpend": 30000,
+      "otherSmSpend": 15000,
+      "newCustomers": 1100
+     },
+     "expected": {
+      "headline:Blended CAC": "$40.91",
+      "Fully loaded CAC": "$40.91",
+      "Paid CAC": "$27.27",
+      "Non-media cost / customer": "$13.64",
+      "Media share of spend": "66.7%"
+     },
+     "formula_output": {
+      "headline:Blended CAC": "$40.91",
+      "Fully loaded CAC": "$40.91",
+      "Paid CAC": "$27.27",
+      "Non-media cost / customer": "$13.64",
+      "Media share of spend": "66.7%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "paidSpend": 12345,
+      "otherSmSpend": 0,
+      "newCustomers": 77
+     },
+     "expected": {
+      "headline:Blended CAC": "$160.32",
+      "Fully loaded CAC": "$160.32",
+      "Paid CAC": "$160.32",
+      "Non-media cost / customer": "$0.00",
+      "Media share of spend": "100.0%"
+     },
+     "formula_output": {
+      "headline:Blended CAC": "$160.32",
+      "Fully loaded CAC": "$160.32",
+      "Paid CAC": "$160.32",
+      "Non-media cost / customer": "$0.00",
+      "Media share of spend": "100.0%"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ltv-cac-ratio-calculator",
+   "name": "LTV:CAC Ratio Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "ltv": 210,
+      "cac": 60
+     },
+     "expected": {
+      "headline:LTV:CAC ratio": "3.50",
+      "Margin left per customer": "$150.00",
+      "Acquisition share of LTV": "28.6%"
+     },
+     "formula_output": {
+      "headline:LTV:CAC ratio": "3.50",
+      "Margin left per customer": "$150.00",
+      "Acquisition share of LTV": "28.6%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "ltv": 90,
+      "cac": 110
+     },
+     "expected": {
+      "headline:LTV:CAC ratio": "0.82",
+      "Margin left per customer": "-$20.00",
+      "Acquisition share of LTV": "122.2%"
+     },
+     "formula_output": {
+      "headline:LTV:CAC ratio": "0.82",
+      "Margin left per customer": "-$20.00",
+      "Acquisition share of LTV": "122.2%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "ltv": 400,
+      "cac": 70
+     },
+     "expected": {
+      "headline:LTV:CAC ratio": "5.71",
+      "Margin left per customer": "$330.00",
+      "Acquisition share of LTV": "17.5%"
+     },
+     "formula_output": {
+      "headline:LTV:CAC ratio": "5.71",
+      "Margin left per customer": "$330.00",
+      "Acquisition share of LTV": "17.5%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "ltv": 333.33,
+      "cac": 47.5
+     },
+     "expected": {
+      "headline:LTV:CAC ratio": "7.02",
+      "Margin left per customer": "$285.83",
+      "Acquisition share of LTV": "14.3%"
+     },
+     "formula_output": {
+      "headline:LTV:CAC ratio": "7.02",
+      "Margin left per customer": "$285.83",
+      "Acquisition share of LTV": "14.3%"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "cac-payback-calculator",
+   "name": "CAC Payback Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "cac": 60,
+      "aov": 80,
+      "marginRatePct": 55,
+      "ordersPerMonth": 0.2
+     },
+     "expected": {
+      "headline:CAC payback": "6.8 mo",
+      "Contribution by this month": "$52.80",
+      "CAC still unrecovered": "$7.20",
+      "Contribution per month": "$8.80",
+      "Contribution per order": "$44.00"
+     },
+     "formula_output": {
+      "headline:CAC payback": "6.8 mo",
+      "Contribution by this month": "$52.80",
+      "CAC still unrecovered": "$7.20",
+      "Contribution per month": "$8.80",
+      "Contribution per order": "$44.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "cac": 40,
+      "aov": 90,
+      "marginRatePct": 60,
+      "ordersPerMonth": 0.3
+     },
+     "expected": {
+      "headline:CAC payback": "2.5 mo",
+      "Contribution by this month": "$97.20",
+      "CAC still unrecovered": "$0.00",
+      "Contribution per month": "$16.20",
+      "Contribution per order": "$54.00"
+     },
+     "formula_output": {
+      "headline:CAC payback": "2.5 mo",
+      "Contribution by this month": "$97.20",
+      "CAC still unrecovered": "$0.00",
+      "Contribution per month": "$16.20",
+      "Contribution per order": "$54.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "cac": 120,
+      "aov": 70,
+      "marginRatePct": 45,
+      "ordersPerMonth": 0.15
+     },
+     "expected": {
+      "headline:CAC payback": "25.4 mo",
+      "Contribution by this month": "$28.35",
+      "CAC still unrecovered": "$91.65",
+      "Contribution per month": "$4.73",
+      "Contribution per order": "$31.50"
+     },
+     "formula_output": {
+      "headline:CAC payback": "25.4 mo",
+      "Contribution by this month": "$28.35",
+      "CAC still unrecovered": "$91.65",
+      "Contribution per month": "$4.73",
+      "Contribution per order": "$31.50"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "cac": 250,
+      "aov": 55,
+      "marginRatePct": 35,
+      "ordersPerMonth": 0.1
+     },
+     "expected": {
+      "headline:CAC payback": "129.9 mo",
+      "Contribution by this month": "$11.55",
+      "CAC still unrecovered": "$238.45",
+      "Contribution per month": "$1.93",
+      "Contribution per order": "$19.25"
+     },
+     "formula_output": {
+      "headline:CAC payback": "129.9 mo",
+      "Contribution by this month": "$11.55",
+      "CAC still unrecovered": "$238.45",
+      "Contribution per month": "$1.93",
+      "Contribution per order": "$19.25"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "marketing-roi-calculator",
+   "name": "Marketing ROI Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 25000,
+      "marginRatePct": 55,
+      "cost": 10000
+     },
+     "expected": {
+      "headline:Marketing ROI": "37.5%",
+      "Gross profit − marketing": "$3,750.00",
+      "Same inputs as ROAS": "2.50×"
+     },
+     "formula_output": {
+      "headline:Marketing ROI": "37.5%",
+      "Gross profit − marketing": "$3,750.00",
+      "Same inputs as ROAS": "2.50×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 15000,
+      "marginRatePct": 30,
+      "cost": 10000
+     },
+     "expected": {
+      "headline:Marketing ROI": "-55.0%",
+      "Gross profit − marketing": "-$5,500.00",
+      "Same inputs as ROAS": "1.50×"
+     },
+     "formula_output": {
+      "headline:Marketing ROI": "-55.0%",
+      "Gross profit − marketing": "-$5,500.00",
+      "Same inputs as ROAS": "1.50×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 90000,
+      "marginRatePct": 60,
+      "cost": 20000
+     },
+     "expected": {
+      "headline:Marketing ROI": "170.0%",
+      "Gross profit − marketing": "$34,000.00",
+      "Same inputs as ROAS": "4.50×"
+     },
+     "formula_output": {
+      "headline:Marketing ROI": "170.0%",
+      "Gross profit − marketing": "$34,000.00",
+      "Same inputs as ROAS": "4.50×"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "revenue": 43210,
+      "marginRatePct": 47,
+      "cost": 18765
+     },
+     "expected": {
+      "headline:Marketing ROI": "8.2%",
+      "Gross profit − marketing": "$1,543.70",
+      "Same inputs as ROAS": "2.30×"
+     },
+     "formula_output": {
+      "headline:Marketing ROI": "8.2%",
+      "Gross profit − marketing": "$1,543.70",
+      "Same inputs as ROAS": "2.30×"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "discount-breakeven-calculator",
+   "name": "Discount Break-Even Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "contributionMarginPct": 55,
+      "discountPct": 20,
+      "currentUnits": 500
+     },
+     "expected": {
+      "headline:Volume lift to break even": "+57.1%",
+      "text:retained": "35.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "786"
+     },
+     "formula_output": {
+      "headline:Volume lift to break even": "+57.1%",
+      "text:retained": "35.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "786"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "contributionMarginPct": 60,
+      "discountPct": 10,
+      "currentUnits": 500
+     },
+     "expected": {
+      "headline:Volume lift to break even": "+20.0%",
+      "text:retained": "50.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "600"
+     },
+     "formula_output": {
+      "headline:Volume lift to break even": "+20.0%",
+      "text:retained": "50.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "600"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "contributionMarginPct": 40,
+      "discountPct": 35,
+      "currentUnits": 500
+     },
+     "expected": {
+      "headline:Volume lift to break even": "+700.0%",
+      "text:retained": "5.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "4,000"
+     },
+     "formula_output": {
+      "headline:Volume lift to break even": "+700.0%",
+      "text:retained": "5.0 pts",
+      "text:units": "500",
+      "text:unitsNeeded": "4,000"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "contributionMarginPct": 30,
+      "discountPct": 40,
+      "currentUnits": 500
+     },
+     "expected": {
+      "headline:Volume lift to break even": "Cannot break even",
+      "text:retained": "-10.0 pts"
+     },
+     "formula_output": {
+      "headline:Volume lift to break even": "Cannot break even",
+      "text:retained": "-10.0 pts"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "contributionMarginPct": 47,
+      "discountPct": 15,
+      "currentUnits": 1234
+     },
+     "expected": {
+      "headline:Volume lift to break even": "+46.9%",
+      "text:retained": "32.0 pts",
+      "text:units": "1,234",
+      "text:unitsNeeded": "1,813"
+     },
+     "formula_output": {
+      "headline:Volume lift to break even": "+46.9%",
+      "text:retained": "32.0 pts",
+      "text:units": "1,234",
+      "text:unitsNeeded": "1,813"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "free-shipping-threshold-calculator",
+   "name": "Free Shipping Threshold Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 80,
+      "shippingCost": 8,
+      "contributionMarginPct": 55,
+      "upliftPct": 25
+     },
+     "expected": {
+      "headline:Suggested free shipping threshold": "$100",
+      "Threshold above AOV": "$20.00",
+      "Extra cart value to cover shipping": "$14.55",
+      "Shipping subsidy": "$8.00",
+      "Threshold": "$100.00"
+     },
+     "formula_output": {
+      "headline:Suggested free shipping threshold": "$100",
+      "Threshold above AOV": "$20.00",
+      "Extra cart value to cover shipping": "$14.55",
+      "Shipping subsidy": "$8.00",
+      "Threshold": "$100.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 45,
+      "shippingCost": 5,
+      "contributionMarginPct": 50,
+      "upliftPct": 30
+     },
+     "expected": {
+      "headline:Suggested free shipping threshold": "$60",
+      "Threshold above AOV": "$15.00",
+      "Extra cart value to cover shipping": "$10.00",
+      "Shipping subsidy": "$5.00",
+      "Threshold": "$60.00"
+     },
+     "formula_output": {
+      "headline:Suggested free shipping threshold": "$60",
+      "Threshold above AOV": "$15.00",
+      "Extra cart value to cover shipping": "$10.00",
+      "Shipping subsidy": "$5.00",
+      "Threshold": "$60.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 160,
+      "shippingCost": 22,
+      "contributionMarginPct": 45,
+      "upliftPct": 20
+     },
+     "expected": {
+      "headline:Suggested free shipping threshold": "$190",
+      "Threshold above AOV": "$30.00",
+      "Extra cart value to cover shipping": "$48.89",
+      "Shipping subsidy": "$22.00",
+      "Threshold": "$190.00"
+     },
+     "formula_output": {
+      "headline:Suggested free shipping threshold": "$190",
+      "Threshold above AOV": "$30.00",
+      "Extra cart value to cover shipping": "$48.89",
+      "Shipping subsidy": "$22.00",
+      "Threshold": "$190.00"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "aov": 63,
+      "shippingCost": 9.5,
+      "contributionMarginPct": 38,
+      "upliftPct": 35
+     },
+     "expected": {
+      "headline:Suggested free shipping threshold": "$85",
+      "Threshold above AOV": "$22.00",
+      "Extra cart value to cover shipping": "$25.00",
+      "Shipping subsidy": "$9.50",
+      "Threshold": "$85.00"
+     },
+     "formula_output": {
+      "headline:Suggested free shipping threshold": "$85",
+      "Threshold above AOV": "$22.00",
+      "Extra cart value to cover shipping": "$25.00",
+      "Shipping subsidy": "$9.50",
+      "Threshold": "$85.00"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ab-test-significance-calculator",
+   "name": "A/B Test Significance Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "visitorsA": 4800,
+      "conversionsA": 144,
+      "visitorsB": 4800,
+      "conversionsB": 180
+     },
+     "expected": {
+      "headline:Verdict": "Significant",
+      "text:p": "0.042",
+      "Relative lift (B vs A)": "25.0%",
+      "Rate difference": "0.75 pts",
+      "z-score": "2.03",
+      "text:rateA": "3.00%",
+      "text:rateB": "3.75%"
+     },
+     "formula_output": {
+      "headline:Verdict": "Significant",
+      "text:p": "0.042",
+      "Relative lift (B vs A)": "25.0%",
+      "Rate difference": "0.75 pts",
+      "z-score": "2.03",
+      "text:rateA": "3.00%",
+      "text:rateB": "3.75%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "visitorsA": 4800,
+      "conversionsA": 144,
+      "visitorsB": 4800,
+      "conversionsB": 196
+     },
+     "expected": {
+      "headline:Verdict": "Significant",
+      "text:p": "0.004",
+      "Relative lift (B vs A)": "36.1%",
+      "Rate difference": "1.08 pts",
+      "z-score": "2.87",
+      "text:rateA": "3.00%",
+      "text:rateB": "4.08%"
+     },
+     "formula_output": {
+      "headline:Verdict": "Significant",
+      "text:p": "0.004",
+      "Relative lift (B vs A)": "36.1%",
+      "Rate difference": "1.08 pts",
+      "z-score": "2.87",
+      "text:rateA": "3.00%",
+      "text:rateB": "4.08%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "visitorsA": 4800,
+      "conversionsA": 144,
+      "visitorsB": 4800,
+      "conversionsB": 150
+     },
+     "expected": {
+      "headline:Verdict": "Not significant",
+      "text:p": "0.722",
+      "Relative lift (B vs A)": "4.2%",
+      "Rate difference": "0.13 pts",
+      "z-score": "0.36",
+      "text:rateA": "3.00%",
+      "text:rateB": "3.13%"
+     },
+     "formula_output": {
+      "headline:Verdict": "Not significant",
+      "text:p": "0.722",
+      "Relative lift (B vs A)": "4.2%",
+      "Rate difference": "0.13 pts",
+      "z-score": "0.36",
+      "text:rateA": "3.00%",
+      "text:rateB": "3.13%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "visitorsA": 12000,
+      "conversionsA": 300,
+      "visitorsB": 11800,
+      "conversionsB": 250
+     },
+     "expected": {
+      "headline:Verdict": "Not significant",
+      "text:p": "0.050",
+      "Relative lift (B vs A)": "-15.3%",
+      "Rate difference": "-0.38 pts",
+      "z-score": "-1.96",
+      "text:rateA": "2.50%",
+      "text:rateB": "2.12%"
+     },
+     "formula_output": {
+      "headline:Verdict": "Not significant",
+      "text:p": "0.050",
+      "Relative lift (B vs A)": "-15.3%",
+      "Rate difference": "-0.38 pts",
+      "z-score": "-1.96",
+      "text:rateA": "2.50%",
+      "text:rateB": "2.12%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "visitorsA": 20000,
+      "conversionsA": 400,
+      "visitorsB": 20000,
+      "conversionsB": 560
+     },
+     "expected": {
+      "headline:Verdict": "Significant",
+      "text:p": "< 0.001",
+      "Relative lift (B vs A)": "40.0%",
+      "Rate difference": "0.80 pts",
+      "z-score": "5.23",
+      "text:rateA": "2.00%",
+      "text:rateB": "2.80%"
+     },
+     "formula_output": {
+      "headline:Verdict": "Significant",
+      "text:p": "< 0.001",
+      "Relative lift (B vs A)": "40.0%",
+      "Rate difference": "0.80 pts",
+      "z-score": "5.23",
+      "text:rateA": "2.00%",
+      "text:rateB": "2.80%"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ab-test-sample-size-calculator",
+   "name": "A/B Test Sample Size Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "baselinePct": 3,
+      "mdeRelPct": 20,
+      "significance": 95,
+      "power": 80,
+      "dailySessions": 5000
+     },
+     "expected": {
+      "headline:Visitors per variant": "13,914",
+      "Total visitors needed": "27,828",
+      "Days at your traffic": "5.6 days",
+      "Target conversion rate": "3.60%"
+     },
+     "formula_output": {
+      "headline:Visitors per variant": "13,914",
+      "Total visitors needed": "27,828",
+      "Days at your traffic": "5.6 days",
+      "Target conversion rate": "3.60%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "baselinePct": 3,
+      "mdeRelPct": 40,
+      "significance": 95,
+      "power": 80,
+      "dailySessions": 5000
+     },
+     "expected": {
+      "headline:Visitors per variant": "3,782",
+      "Total visitors needed": "7,564",
+      "Days at your traffic": "1.5 days",
+      "Target conversion rate": "4.20%"
+     },
+     "formula_output": {
+      "headline:Visitors per variant": "3,782",
+      "Total visitors needed": "7,564",
+      "Days at your traffic": "1.5 days",
+      "Target conversion rate": "4.20%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "baselinePct": 3,
+      "mdeRelPct": 8,
+      "significance": 95,
+      "power": 80,
+      "dailySessions": 5000
+     },
+     "expected": {
+      "headline:Visitors per variant": "82,376",
+      "Total visitors needed": "164,752",
+      "Days at your traffic": "33 days",
+      "Target conversion rate": "3.24%"
+     },
+     "formula_output": {
+      "headline:Visitors per variant": "82,376",
+      "Total visitors needed": "164,752",
+      "Days at your traffic": "33 days",
+      "Target conversion rate": "3.24%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "baselinePct": 5.5,
+      "mdeRelPct": 15,
+      "significance": 99,
+      "power": 90,
+      "dailySessions": 2500
+     },
+     "expected": {
+      "headline:Visitors per variant": "24,320",
+      "Total visitors needed": "48,640",
+      "Days at your traffic": "19.5 days",
+      "Target conversion rate": "6.33%"
+     },
+     "formula_output": {
+      "headline:Visitors per variant": "24,320",
+      "Total visitors needed": "48,640",
+      "Days at your traffic": "19.5 days",
+      "Target conversion rate": "6.33%"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "baselinePct": 1.2,
+      "mdeRelPct": 25,
+      "significance": 90,
+      "power": 80,
+      "dailySessions": 12000
+     },
+     "expected": {
+      "headline:Visitors per variant": "18,297",
+      "Total visitors needed": "36,594",
+      "Days at your traffic": "3 days",
+      "Target conversion rate": "1.50%"
+     },
+     "formula_output": {
+      "headline:Visitors per variant": "18,297",
+      "Total visitors needed": "36,594",
+      "Days at your traffic": "3 days",
+      "Target conversion rate": "1.50%"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "creative-testing-budget-calculator",
+   "name": "Creative Testing Budget Calculator",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "expectedCpa": 62,
+      "ordersPerConcept": 50,
+      "concepts": 4,
+      "dailyBudget": 400
+     },
+     "expected": {
+      "headline:Total test budget": "$12,400",
+      "Total test budget": "$12,400",
+      "Estimated flight": "31 days"
+     },
+     "formula_output": {
+      "headline:Total test budget": "$12,400",
+      "Total test budget": "$12,400",
+      "Estimated flight": "31 days"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "expectedCpa": 45,
+      "ordersPerConcept": 50,
+      "concepts": 2,
+      "dailyBudget": 250
+     },
+     "expected": {
+      "headline:Total test budget": "$4,500",
+      "Total test budget": "$4,500",
+      "Estimated flight": "18 days"
+     },
+     "formula_output": {
+      "headline:Total test budget": "$4,500",
+      "Total test budget": "$4,500",
+      "Estimated flight": "18 days"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "expectedCpa": 62,
+      "ordersPerConcept": 50,
+      "concepts": 8,
+      "dailyBudget": 1500
+     },
+     "expected": {
+      "headline:Total test budget": "$24,800",
+      "Total test budget": "$24,800",
+      "Estimated flight": "16.5 days"
+     },
+     "formula_output": {
+      "headline:Total test budget": "$24,800",
+      "Total test budget": "$24,800",
+      "Estimated flight": "16.5 days"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "expectedCpa": 38.5,
+      "ordersPerConcept": 35,
+      "concepts": 5,
+      "dailyBudget": 0
+     },
+     "expected": {
+      "headline:Total test budget": "$6,738",
+      "Total test budget": "$6,738",
+      "Estimated flight": "No daily budget"
+     },
+     "formula_output": {
+      "headline:Total test budget": "$6,738",
+      "Total test budget": "$6,738",
+      "Estimated flight": "No daily budget"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "utm-builder",
+   "name": "UTM Builder",
+   "vectors": [
+    {
+     "mode": null,
+     "inputs": {
+      "url": "https://stefanbrain.com",
+      "source": "facebook",
+      "medium": "paid-social",
+      "campaign": "spring-launch",
+      "term": "",
+      "content": ""
+     },
+     "expected": {
+      "text:url": "https://stefanbrain.com/?utm_source=facebook&utm_medium=paid-social&utm_campaign=spring-launch"
+     },
+     "formula_output": {
+      "text:url": "https://stefanbrain.com/?utm_source=facebook&utm_medium=paid-social&utm_campaign=spring-launch"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "url": "doemedia.com/offer",
+      "source": "Google",
+      "medium": "cpc",
+      "campaign": "Fall Sale 2026",
+      "term": "running shoes",
+      "content": "ad 01"
+     },
+     "expected": {
+      "text:url": "https://doemedia.com/offer?utm_source=google&utm_medium=cpc&utm_campaign=fall-sale-2026&utm_term=running-shoes&utm_content=ad-01"
+     },
+     "formula_output": {
+      "text:url": "https://doemedia.com/offer?utm_source=google&utm_medium=cpc&utm_campaign=fall-sale-2026&utm_term=running-shoes&utm_content=ad-01"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "url": "https://example.com/p?color=red&utm_source=old",
+      "source": "tiktok",
+      "medium": "paid-social",
+      "campaign": "ugc_test",
+      "term": "",
+      "content": "Hook A&B"
+     },
+     "expected": {
+      "text:url": "https://example.com/p?color=red&utm_source=tiktok&utm_medium=paid-social&utm_campaign=ugc_test&utm_content=hook-a%26b"
+     },
+     "formula_output": {
+      "text:url": "https://example.com/p?color=red&utm_source=tiktok&utm_medium=paid-social&utm_campaign=ugc_test&utm_content=hook-a%26b"
+     },
+     "match": true
+    },
+    {
+     "mode": null,
+     "inputs": {
+      "url": "https://shop.example.com/collections/all#top",
+      "source": "email",
+      "medium": "email",
+      "campaign": "vip drop",
+      "term": "",
+      "content": ""
+     },
+     "expected": {
+      "text:url": "https://shop.example.com/collections/all?utm_source=email&utm_medium=email&utm_campaign=vip-drop#top"
+     },
+     "formula_output": {
+      "text:url": "https://shop.example.com/collections/all?utm_source=email&utm_medium=email&utm_campaign=vip-drop#top"
+     },
+     "match": true
+    }
+   ]
+  },
+  {
+   "tool_id": "ad-character-counter",
+   "name": "Ad Character Counter",
+   "vectors": [
+    {
+     "mode": "meta",
+     "inputs": {
+      "primary": "Short primary text here.",
+      "headline": "A headline",
+      "description": "Desc"
+     },
+     "expected": {
+      "headline:Primary text characters": "24 / 125",
+      "text:Primary text": "24 / 125",
+      "text:Primary text status": "101 remaining · 4 words",
+      "text:Headline": "10 / 40",
+      "text:Headline status": "30 remaining · 2 words",
+      "text:Description": "4 / 30",
+      "text:Description status": "26 remaining · 1 words"
+     },
+     "formula_output": {
+      "headline:Primary text characters": "24 / 125",
+      "text:Primary text": "24 / 125",
+      "text:Primary text status": "101 remaining · 4 words",
+      "text:Headline": "10 / 40",
+      "text:Headline status": "30 remaining · 2 words",
+      "text:Description": "4 / 30",
+      "text:Description status": "26 remaining · 1 words"
+     },
+     "match": true
+    },
+    {
+     "mode": "meta",
+     "inputs": {
+      "primary": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "headline": "This headline is definitely longer than forty chars",
+      "description": "Exactly thirty characters here"
+     },
+     "expected": {
+      "headline:Primary text characters": "130 / 125",
+      "text:Primary text": "130 / 125",
+      "text:Primary text status": "5 above window · 1 words",
+      "text:Headline": "51 / 40",
+      "text:Headline status": "11 above window · 8 words",
+      "text:Description": "30 / 30",
+      "text:Description status": "0 remaining · 4 words"
+     },
+     "formula_output": {
+      "headline:Primary text characters": "130 / 125",
+      "text:Primary text": "130 / 125",
+      "text:Primary text status": "5 above window · 1 words",
+      "text:Headline": "51 / 40",
+      "text:Headline status": "11 above window · 8 words",
+      "text:Description": "30 / 30",
+      "text:Description status": "0 remaining · 4 words"
+     },
+     "match": true
+    },
+    {
+     "mode": "google",
+     "inputs": {
+      "headline": "Thirty char headline goes here",
+      "description": "A Google description that is comfortably under ninety characters long."
+     },
+     "expected": {
+      "headline:Headline characters": "30 / 30",
+      "text:Headline": "30 / 30",
+      "text:Headline status": "0 remaining · 5 words",
+      "text:Description": "70 / 90",
+      "text:Description status": "20 remaining · 10 words"
+     },
+     "formula_output": {
+      "headline:Headline characters": "30 / 30",
+      "text:Headline": "30 / 30",
+      "text:Headline status": "0 remaining · 5 words",
+      "text:Description": "70 / 90",
+      "text:Description status": "20 remaining · 10 words"
+     },
+     "match": true
+    },
+    {
+     "mode": "tiktok",
+     "inputs": {
+      "primary": "TikTok ad text with emoji-free copy and some words to count"
+     },
+     "expected": {
+      "headline:Ad text characters": "59 / 100",
+      "text:Ad text": "59 / 100",
+      "text:Ad text status": "41 remaining · 11 words"
+     },
+     "formula_output": {
+      "headline:Ad text characters": "59 / 100",
+      "text:Ad text": "59 / 100",
+      "text:Ad text status": "41 remaining · 11 words"
+     },
+     "match": true
+    }
+   ]
+  }
+ ]
+}
