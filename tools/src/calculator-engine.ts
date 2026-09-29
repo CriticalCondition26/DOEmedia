@@ -181,7 +181,7 @@ export function calculate(
         conversions = num(inputs, "conversions");
         cpa = spend / conversions;
       }
-      const headline =
+      const headline: CalculatorOutput =
         mode === "conversions"
           ? { "headline:Conversions at target": count(conversions, 1) }
           : mode === "budget"
@@ -201,7 +201,7 @@ export function calculate(
       if (mode === "spend") spend = (cpm * impressions) / 1000;
       else if (mode === "impressions") impressions = (spend / cpm) * 1000;
       else cpm = (spend / impressions) * 1000;
-      const headline =
+      const headline: CalculatorOutput =
         mode === "spend"
           ? { "headline:Spend": money(spend, 0) }
           : mode === "impressions"

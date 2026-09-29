@@ -14,19 +14,28 @@ function initialInputs(tool: CalculatorDefinition): CalculatorInputs {
 }
 
 function outputLabel(key: string) {
-  return key.replace(/^(headline:|li:|text:)/, "");
+  const label = key.replace(/^(headline:|li:|text:)/, "");
+  const labels: Record<string, string> = {
+    url: "Campaign URL",
+    p: "Two-tailed p-value",
+    rateA: "Variant A rate",
+    rateB: "Variant B rate",
+  };
+  return labels[label] ?? label;
 }
 
 function Field({
   definition,
   value,
   onChange,
+  idPrefix,
 }: {
   definition: FieldDefinition;
   value: string | number;
   onChange: (value: string | number) => void;
+  idPrefix: string;
 }) {
-  const id = `field-${definition.key}`;
+  const id = `${idPrefix}-field-${definition.key}`;
   const stringInput = definition.kind === "text" || definition.kind === "textarea";
   const props = {
     id,
@@ -34,7 +43,6 @@ function Field({
     onChange: (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
     ) => onChange(stringInput ? event.target.value : Number(event.target.value)),
-    "aria-describedby": `${id}-unit`,
   };
 
   return (
@@ -63,7 +71,7 @@ function Field({
           />
         )}
         {definition.unit && definition.unit !== "$" && definition.kind !== "select" && (
-          <span className="input-suffix" id={`${id}-unit`}>
+          <span className="input-suffix">
             {definition.unit === "count" ? "" : definition.unit}
           </span>
         )}
@@ -85,9 +93,11 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
       (!Number.isFinite(Number(inputs[field.key])) || Number(inputs[field.key]) < 0),
   );
   const output = validation ? {} : calculate(tool.id, mode, inputs);
+  const calculationError =
+    !validation && Object.values(output).some((value) => value === "n/a");
   const entries = Object.entries(output);
-  const headline = entries.find(([key]) => key.startsWith("headline:"));
-  const details = entries.filter(([key]) => !key.startsWith("headline:"));
+  const headline = entries.find(([key]) => key.startsWith("headline:")) ?? entries[0];
+  const details = entries.filter(([key]) => key !== headline?.[0]);
 
   async function copyResults() {
     const copy = entries
@@ -125,15 +135,18 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
                 key={field.key}
                 definition={field}
                 value={inputs[field.key]}
+                idPrefix={tool.id}
                 onChange={(value) =>
                   setInputs((current) => ({ ...current, [field.key]: value }))
                 }
               />
             ))}
           </div>
-          {validation && (
+          {(validation || calculationError) && (
             <p className="validation" role="alert">
-              Enter zero or a positive number for {validation.label.toLowerCase()}.
+              {validation
+                ? `Enter zero or a positive number for ${validation.label.toLowerCase()}.`
+                : "This calculation needs a non-zero value in every divisor field."}
             </p>
           )}
         </div>
@@ -154,7 +167,9 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
           {headline ? (
             <>
               <p className="result-label">{outputLabel(headline[0])}</p>
-              <p className="result-value">{headline[1]}</p>
+              <p className={`result-value ${headline[1].length > 30 ? "long" : ""}`}>
+                {headline[1]}
+              </p>
             </>
           ) : (
             <p className="empty-result">Check the inputs to continue.</p>
@@ -218,10 +233,12 @@ function CalculatorCard({ tool }: { tool: CalculatorDefinition }) {
 export default function App() {
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
+    const normalize = (value: string) =>
+      value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    const normalized = normalize(query);
     if (!normalized) return calculators;
     return calculators.filter((tool) =>
-      `${tool.name} ${tool.category} ${tool.tells}`.toLowerCase().includes(normalized),
+      normalize(`${tool.name} ${tool.category} ${tool.tells}`).includes(normalized),
     );
   }, [query]);
 

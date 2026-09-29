@@ -687,6 +687,14 @@ h4,
   overflow-wrap: anywhere;
 }
 
+.result-value.long {
+  font-family: "DM Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+}
+
 .empty-result {
   position: relative;
   margin: 40px 0;
