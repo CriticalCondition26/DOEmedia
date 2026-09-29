@@ -458,6 +458,8 @@ export function calculate(
         "z-score": fixed(z, 2),
         "text:rateA": percentFromFraction(rateA, 2),
         "text:rateB": percentFromFraction(rateB, 2),
+        "Decision threshold": "p < 0.05",
+        Test: "Two-proportion z-test",
       };
     }
     case "ab-test-sample-size-calculator": {

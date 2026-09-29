@@ -98,6 +98,17 @@ describe("visible scenario controls", () => {
     expect(result["Contribution by this month"]).toBe("$88.00");
     expect(result["CAC still unrecovered"]).toBe("$0.00");
   });
+
+  it("states the fixed A/B decision threshold and test method", () => {
+    const result = calculate("ab-test-significance-calculator", null, {
+      visitorsA: 4800,
+      conversionsA: 144,
+      visitorsB: 4800,
+      conversionsB: 180,
+    });
+    expect(result["Decision threshold"]).toBe("p < 0.05");
+    expect(result.Test).toBe("Two-proportion z-test");
+  });
 });
 
 describe("calculator explanation copy", () => {
