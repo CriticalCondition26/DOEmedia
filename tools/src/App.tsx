@@ -7,6 +7,7 @@ import {
   type CalculatorDefinition,
   type FieldDefinition,
 } from "./calculator-definitions";
+import doeLogo from "./assets/doe-logo.svg";
 import "./styles.css";
 
 function initialInputs(tool: CalculatorDefinition): CalculatorInputs {
@@ -377,10 +378,9 @@ export default function App() {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <a className="wordmark" href="#top" aria-label="DOE Media calculators home">
-          <span>[</span> DOE Media · Data Over Ego <span>]</span>
+        <a className="header-logo" href="#top" aria-label="DOE Media">
+          <img src={doeLogo} alt="" />
         </a>
-        {/* DOE_SVG_LOGO_SLOT: Replace this text wordmark when an approved SVG is supplied. */}
         <a className="topbar-link" href="#calculators">
           Browse Tools
         </a>

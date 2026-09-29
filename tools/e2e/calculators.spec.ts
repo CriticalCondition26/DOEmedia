@@ -3,6 +3,34 @@ import { expect, test } from "@playwright/test";
 
 const widths = [390, 768, 1440] as const;
 
+test("header uses the approved DOE vector and exact brand palette", async ({ page }) => {
+  await page.goto("/");
+
+  const logo = page.getByRole("link", { name: "DOE Media", exact: true });
+  await expect(logo).toBeVisible();
+  await expect(logo.locator("img")).toHaveAttribute(
+    "src",
+    /^(?:data:image\/svg\+xml,.*|.*doe-logo\.svg)$/,
+  );
+  await expect(logo.locator("img")).toHaveJSProperty("complete", true);
+
+  const palette = await page.evaluate(() => {
+    const styles = getComputedStyle(document.documentElement);
+    return {
+      red: styles.getPropertyValue("--red").trim(),
+      purple: styles.getPropertyValue("--purple").trim(),
+      black: styles.getPropertyValue("--black").trim(),
+      white: styles.getPropertyValue("--white").trim(),
+    };
+  });
+  expect(palette).toEqual({
+    red: "#E24B4B",
+    purple: "#694AE2",
+    black: "#000000",
+    white: "#FFFFFF",
+  });
+});
+
 for (const width of widths) {
   test(`calculator library fits at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });

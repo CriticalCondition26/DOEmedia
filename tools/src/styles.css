@@ -5,16 +5,16 @@
 @import "@fontsource/dm-sans/700.css";
 
 :root {
-  --ink: #17161d;
+  --black: #000000;
+  --white: #FFFFFF;
+  --ink: var(--black);
   --muted: #696771;
   --paper: #f7f4ef;
-  --panel: #ffffff;
+  --panel: var(--white);
   --soft: #f0ece6;
   --line: #ded9d1;
-  --red: #e24b4b;
-  --red-dark: #b92e3d;
-  --purple: #694ae2;
-  --purple-dark: #44328f;
+  --red: #E24B4B;
+  --purple: #694AE2;
   font-family: "DM Sans", sans-serif;
   color: var(--ink);
   background: var(--paper);
@@ -87,6 +87,18 @@ textarea:focus-visible {
   backdrop-filter: blur(16px);
 }
 
+.header-logo {
+  display: block;
+  width: 132px;
+  line-height: 0;
+}
+
+.header-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .wordmark {
   color: var(--ink);
   font-family: "Jost", sans-serif;
@@ -152,7 +164,7 @@ textarea:focus-visible {
 .eyebrow {
   position: relative;
   margin: 0 0 22px;
-  color: var(--purple-dark);
+  color: var(--black);
   font-family: "DM Sans", sans-serif;
   font-size: 11px;
   font-weight: 700;
@@ -237,9 +249,9 @@ h4,
   justify-content: center;
   padding: 0 24px;
   border-radius: 999px;
-  background: var(--red-dark);
-  box-shadow: 0 12px 28px rgb(185 46 61 / 21%);
-  color: #fff;
+  background: var(--red);
+  box-shadow: 0 12px 28px rgb(226 75 75 / 21%);
+  color: var(--black);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
@@ -249,7 +261,7 @@ h4,
 }
 
 .primary-link:hover {
-  box-shadow: 0 15px 34px rgb(185 46 61 / 27%);
+  box-shadow: 0 15px 34px rgb(226 75 75 / 27%);
   transform: translateY(-2px);
 }
 
@@ -320,7 +332,7 @@ h4,
 
 .category-nav a:hover {
   border-color: var(--purple);
-  color: var(--purple-dark);
+  color: var(--black);
 }
 
 .search-box {
@@ -453,7 +465,7 @@ h4,
 }
 
 .open-label {
-  color: var(--purple-dark);
+  color: var(--black);
   font-size: 12px;
   font-weight: 700;
 }
@@ -465,7 +477,7 @@ h4,
   place-items: center;
   border: 1px solid rgb(105 74 226 / 24%);
   border-radius: 50%;
-  color: var(--purple-dark);
+  color: var(--purple);
 }
 
 .toggle-icon svg {
@@ -527,8 +539,8 @@ h4,
   position: relative;
   overflow: hidden;
   border-color: transparent;
-  background: linear-gradient(145deg, #493592, #231d40);
-  color: #fff;
+  background: linear-gradient(145deg, var(--purple), var(--black));
+  color: var(--white);
 }
 
 .results-card::before {
@@ -623,7 +635,7 @@ h4,
   border: 1px solid #d8d2c9;
   border-radius: 9px;
   background: #faf9f7;
-  color: var(--purple-dark);
+  color: var(--black);
   font-size: 12px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -802,7 +814,7 @@ h4,
 }
 
 .chart-heading strong {
-  color: var(--purple-dark);
+  color: var(--black);
   font-family: "Jost", sans-serif;
   font-size: 16px;
   font-variant-numeric: tabular-nums;
