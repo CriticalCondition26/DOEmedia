@@ -458,13 +458,19 @@ h4,
   font-weight: 700;
 }
 
-.chevron {
-  width: 20px;
-  transition: transform 180ms ease;
+.toggle-icon {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgb(105 74 226 / 24%);
+  border-radius: 50%;
+  color: var(--purple-dark);
 }
 
-.tool-card.open .chevron {
-  transform: rotate(180deg);
+.toggle-icon svg {
+  width: 13px;
+  height: 13px;
 }
 
 .calculator-panel {
@@ -591,6 +597,36 @@ h4,
 
 .input-wrap textarea {
   resize: vertical;
+}
+
+.range-control {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 64px;
+  gap: 12px;
+  align-items: center;
+}
+
+.input-wrap .range-control input[type="range"] {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  accent-color: var(--purple);
+  cursor: pointer;
+}
+
+.range-control output {
+  display: grid;
+  min-height: 40px;
+  place-items: center;
+  border: 1px solid #d8d2c9;
+  border-radius: 9px;
+  background: #faf9f7;
+  color: var(--purple-dark);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .input-wrap input:focus,
@@ -737,6 +773,80 @@ h4,
   margin-top: 18px;
 }
 
+.profit-curve-card {
+  margin-top: 18px;
+  padding: 20px 22px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.chart-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.chart-heading h4 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chart-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.chart-heading strong {
+  color: var(--purple-dark);
+  font-family: "Jost", sans-serif;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.profit-curve-card svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  overflow: visible;
+}
+
+.profit-curve-card text {
+  fill: #77747e;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+}
+
+.chart-zero {
+  stroke: rgb(226 75 75 / 45%);
+  stroke-dasharray: 5 5;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--purple);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.chart-marker-line {
+  stroke: rgb(23 22 29 / 20%);
+  stroke-dasharray: 3 4;
+}
+
+.chart-marker {
+  fill: var(--red);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
 .explanation-grid > div {
   padding: 17px 18px;
   border-left: 3px solid var(--red);
@@ -757,6 +867,20 @@ h4,
   color: var(--muted);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.explanation-grid code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #ddd6cc;
+  border-radius: 8px;
+  background: #fff;
+  color: #423f49;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .no-results {
@@ -891,6 +1015,10 @@ footer p {
 
   .result-row {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .chart-heading {
+    display: grid;
   }
 
   footer {

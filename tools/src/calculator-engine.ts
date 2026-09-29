@@ -44,6 +44,10 @@ function num(inputs: CalculatorInputs, key: string) {
   return Number.isFinite(value) ? value : 0;
 }
 
+function scenarioNum(inputs: CalculatorInputs, key: string, fallback: number) {
+  return inputs[key] === undefined ? fallback : num(inputs, key);
+}
+
 function text(inputs: CalculatorInputs, key: string) {
   return String(inputs[key] ?? "");
 }
@@ -113,7 +117,10 @@ export function calculate(
         "Clicks needed": count(clicks),
         "Implied CPA": money(num(inputs, "cpc") / (num(inputs, "cvrPct") / 100)),
         "Implied ROAS": ratio(revenue / budget),
-        "text:daily": money(budget / 30, 0),
+        "text:daily": money(
+          budget / scenarioNum(inputs, "flightDays", 30),
+          0,
+        ),
       };
     }
     case "roas-calculator": {
@@ -123,11 +130,12 @@ export function calculate(
           ? revenue / num(inputs, "targetRoas")
           : num(inputs, "spend");
       const roas = revenue / spend;
+      const exploreTarget = scenarioNum(inputs, "exploreTargetRoas", 3);
       return {
         [mode === "allowed-spend" ? "headline:Allowed spend" : "headline:ROAS"]:
           mode === "allowed-spend" ? money(spend) : fixed(roas, 2),
-        "Revenue at target": money(spend * 3, 0),
-        "Revenue gap to target": money(spend * 3 - revenue, 0),
+        "Revenue at target": money(spend * exploreTarget, 0),
+        "Revenue gap to target": money(spend * exploreTarget - revenue, 0),
         "Revenue per $1": money(roas),
         "Spend share": percentFromFraction(spend / revenue),
       };
@@ -142,7 +150,8 @@ export function calculate(
         num(inputs, "processingFixed") -
         num(inputs, "otherVariable");
       const breakEven = contribution > 0 && aov > 0 ? aov / contribution : Infinity;
-      const adSpend = aov / 3;
+      const achievedRoas = scenarioNum(inputs, "achievedRoas", 3);
+      const adSpend = aov / achievedRoas;
       const profit = contribution - adSpend;
       return {
         "headline:Break-even ROAS": fixed(breakEven, 2),
@@ -220,12 +229,13 @@ export function calculate(
         mode === "auction"
           ? num(inputs, "cpm") / (10 * num(inputs, "ctrPct"))
           : num(inputs, "spend") / num(inputs, "clicks");
-      const clicks = 100 / cpc;
+      const clicksPer100 = 100 / cpc;
+      const scenarioClicks = scenarioNum(inputs, "exploreSpend", 100) / cpc;
       return {
         "headline:Cost per click": money(cpc),
         "Per link click": money(cpc),
-        "Clicks per $100": count(clicks),
-        "text:clicks": count(clicks),
+        "Clicks per $100": count(clicksPer100),
+        "text:clicks": count(scenarioClicks),
       };
     }
     case "ctr-calculator": {
@@ -299,11 +309,12 @@ export function calculate(
       const revenue = num(inputs, "revenue");
       const orders = num(inputs, "orders");
       const aov = revenue / orders;
+      const increase = scenarioNum(inputs, "aovIncrease", 10);
       return {
         "headline:Average order value": money(aov),
         "Orders held constant": count(orders),
-        "Additional revenue": money(10 * orders, 0),
-        "Scenario revenue": money((aov + 10) * orders, 0),
+        "Additional revenue": money(increase * orders, 0),
+        "Scenario revenue": money((aov + increase) * orders, 0),
         "Current revenue": money(revenue, 0),
       };
     }
@@ -371,10 +382,11 @@ export function calculate(
       const cac = num(inputs, "cac");
       const perOrder = num(inputs, "aov") * (num(inputs, "marginRatePct") / 100);
       const monthly = perOrder * num(inputs, "ordersPerMonth");
+      const inspectMonth = scenarioNum(inputs, "inspectMonth", 6);
       return {
         "headline:CAC payback": `${fixed(cac / monthly, 1)} mo`,
-        "Contribution by this month": money(monthly * 6),
-        "CAC still unrecovered": money(Math.max(0, cac - monthly * 6)),
+        "Contribution by this month": money(monthly * inspectMonth),
+        "CAC still unrecovered": money(Math.max(0, cac - monthly * inspectMonth)),
         "Contribution per month": money(monthly),
         "Contribution per order": money(perOrder),
       };

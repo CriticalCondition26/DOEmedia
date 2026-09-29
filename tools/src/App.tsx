@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Check, ChevronDown, Copy, Search, X } from "lucide-react";
+import { Check, Copy, Minus, Plus, Search, X } from "lucide-react";
 import { calculate, type CalculatorInputs } from "./calculator-engine";
 import {
   calculators,
@@ -13,15 +13,63 @@ function initialInputs(tool: CalculatorDefinition): CalculatorInputs {
   return Object.fromEntries(tool.fields.map((field) => [field.key, field.defaultValue]));
 }
 
-function outputLabel(key: string) {
+function outputLabel(
+  key: string,
+  tool?: CalculatorDefinition,
+  inputs?: CalculatorInputs,
+) {
   const label = key.replace(/^(headline:|li:|text:)/, "");
   const labels: Record<string, string> = {
     url: "Campaign URL",
     p: "Two-tailed p-value",
     rateA: "Variant A rate",
     rateB: "Variant B rate",
+    daily: "Daily budget",
+    cpc: "Cost per conversion",
+    clicks: "Estimated link clicks",
+    store: "Total store revenue",
+    mer: "MER summary",
+    per1000: "Clicks per 1,000 impressions",
+    retained: "Contribution retained",
+    units: "Current units",
+    unitsNeeded: "Units to match contribution",
   };
-  return labels[label] ?? label;
+  const baseLabel = labels[label] ?? label;
+  if (!tool || !inputs) return baseLabel;
+
+  if (tool.id === "ad-budget-calculator" && label === "daily") {
+    return `Daily budget at ${inputs.flightDays} days`;
+  }
+  if (
+    tool.id === "roas-calculator" &&
+    ["Revenue at target", "Revenue gap to target"].includes(label)
+  ) {
+    return `${label} at ${Number(inputs.exploreTargetRoas).toFixed(1)}x ROAS`;
+  }
+  if (
+    tool.id === "breakeven-roas-calculator" &&
+    ["Profit per order", "Ad spend per order", "Net margin"].includes(label)
+  ) {
+    return `${label} at ${Number(inputs.achievedRoas).toFixed(1)}x ROAS`;
+  }
+  if (tool.id === "cpc-calculator" && label === "clicks") {
+    return `Estimated link clicks at $${Number(inputs.exploreSpend).toLocaleString("en-US")} spend`;
+  }
+  if (
+    tool.id === "aov-calculator" &&
+    ["Additional revenue", "Scenario revenue"].includes(label)
+  ) {
+    return `${label} at +$${Number(inputs.aovIncrease).toLocaleString("en-US")} AOV`;
+  }
+  if (tool.id === "cac-payback-calculator") {
+    if (label === "Contribution by this month") {
+      return `Contribution by month ${inputs.inspectMonth}`;
+    }
+    if (label === "CAC still unrecovered") {
+      return `CAC unrecovered after month ${inputs.inspectMonth}`;
+    }
+  }
+  return baseLabel;
 }
 
 function Field({
@@ -61,6 +109,21 @@ function Field({
               </option>
             ))}
           </select>
+        ) : definition.kind === "range" ? (
+          <div className="range-control">
+            <input
+              {...props}
+              type="range"
+              min={definition.min}
+              max={definition.max}
+              step={definition.step}
+            />
+            <output htmlFor={id}>
+              {definition.unit === "$" ? "$" : ""}
+              {Number(value).toFixed(definition.step && definition.step < 1 ? 1 : 0)}
+              {definition.unit === "x" ? "x" : definition.unit === "%" ? "%" : definition.unit === "months" ? " mo" : ""}
+            </output>
+          </div>
         ) : (
           <input
             {...props}
@@ -70,12 +133,75 @@ function Field({
             step={definition.step ?? "any"}
           />
         )}
-        {definition.unit && definition.unit !== "$" && definition.kind !== "select" && (
+        {definition.unit &&
+          definition.unit !== "$" &&
+          definition.kind !== "select" &&
+          definition.kind !== "range" && (
           <span className="input-suffix">
             {definition.unit === "count" ? "" : definition.unit}
           </span>
-        )}
+          )}
       </div>
+    </div>
+  );
+}
+
+function ProfitCurve({ inputs }: { inputs: CalculatorInputs }) {
+  const value = (key: string) => Number(inputs[key] ?? 0);
+  const aov = value("aov");
+  const contribution =
+    aov -
+    value("cogs") -
+    value("shipping") -
+    (aov * value("processingRatePct")) / 100 -
+    value("processingFixed") -
+    value("otherVariable");
+  const achieved = value("achievedRoas");
+  const samples = Array.from({ length: 31 }, (_, index) => {
+    const roas = 0.5 + index * 0.25;
+    return { roas, profit: contribution - aov / roas };
+  });
+  const profits = samples.map((sample) => sample.profit);
+  const min = Math.min(...profits, 0);
+  const max = Math.max(...profits, 0);
+  const span = max - min || 1;
+  const x = (roas: number) => 24 + ((roas - 0.5) / 7.5) * 552;
+  const y = (profit: number) => 182 - ((profit - min) / span) * 150;
+  const achievedProfit = contribution - aov / achieved;
+
+  return (
+    <div className="profit-curve-card">
+      <div className="chart-heading">
+        <div>
+          <h4>Profit Per Order Curve</h4>
+          <p>Profit after variable costs and ad spend at each achieved ROAS.</p>
+        </div>
+        <strong>
+          {achieved.toFixed(1)}x · {achievedProfit.toLocaleString("en-US", { style: "currency", currency: "USD" })}
+        </strong>
+      </div>
+      <svg
+        viewBox="0 0 600 220"
+        role="img"
+        aria-label="Profit per order across ROAS from 0.5x to 8.0x"
+      >
+        <line className="chart-zero" x1="24" x2="576" y1={y(0)} y2={y(0)} />
+        <polyline
+          className="chart-line"
+          points={samples.map((sample) => `${x(sample.roas)},${y(sample.profit)}`).join(" ")}
+        />
+        <line
+          className="chart-marker-line"
+          x1={x(achieved)}
+          x2={x(achieved)}
+          y1="22"
+          y2="182"
+        />
+        <circle className="chart-marker" cx={x(achieved)} cy={y(achievedProfit)} r="5" />
+        <text x="24" y="207">0.5x</text>
+        <text x="552" y="207">8.0x</text>
+        <text x="28" y={Math.max(16, y(0) - 7)}>Break-even line</text>
+      </svg>
     </div>
   );
 }
@@ -101,7 +227,7 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
 
   async function copyResults() {
     const copy = entries
-      .map(([key, value]) => `${outputLabel(key)}: ${value}`)
+      .map(([key, value]) => `${outputLabel(key, tool, inputs)}: ${value}`)
       .join("\n");
     await navigator.clipboard.writeText(copy);
     setCopied(true);
@@ -166,7 +292,7 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
           </div>
           {headline ? (
             <>
-              <p className="result-label">{outputLabel(headline[0])}</p>
+              <p className="result-label">{outputLabel(headline[0], tool, inputs)}</p>
               <p className={`result-value ${headline[1].length > 30 ? "long" : ""}`}>
                 {headline[1]}
               </p>
@@ -177,7 +303,7 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
           <div className="result-details">
             {details.map(([key, value]) => (
               <div className="result-row" key={key}>
-                <span>{outputLabel(key)}</span>
+                <span>{outputLabel(key, tool, inputs)}</span>
                 <strong>{value}</strong>
               </div>
             ))}
@@ -185,14 +311,17 @@ function CalculatorPanel({ tool }: { tool: CalculatorDefinition }) {
         </div>
       </div>
 
+      {tool.id === "breakeven-roas-calculator" && <ProfitCurve inputs={inputs} />}
+
       <div className="explanation-grid">
         <div>
           <h4>What This Tells You</h4>
-          <p>{tool.tells}</p>
+          <p>{tool.guidance}</p>
         </div>
         <div>
           <h4>How It Is Calculated</h4>
           <p>{tool.calculation}</p>
+          <code>{tool.formula}</code>
         </div>
       </div>
     </div>
@@ -210,6 +339,7 @@ function CalculatorCard({ tool }: { tool: CalculatorDefinition }) {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls={`${tool.id}-panel`}
+        data-state={open ? "expanded" : "collapsed"}
       >
         <span className="tool-number">
           {String(calculators.findIndex((item) => item.id === tool.id) + 1).padStart(2, "0")}
@@ -219,7 +349,9 @@ function CalculatorCard({ tool }: { tool: CalculatorDefinition }) {
           <span className="tool-description">{tool.tells}</span>
         </span>
         <span className="open-label">{open ? "Close" : "Open"}</span>
-        <ChevronDown className="chevron" aria-hidden="true" />
+        <span className="toggle-icon" aria-hidden="true">
+          {open ? <Minus /> : <Plus />}
+        </span>
       </button>
       {open && (
         <div id={`${tool.id}-panel`}>

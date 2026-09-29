@@ -31,6 +31,26 @@ test("search finds a calculator and live result updates", async ({ page }) => {
   await expect(page.getByText("1.54", { exact: true })).toBeVisible();
 });
 
+test("break-even ROAS exposes its achieved scenario and profit curve", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByPlaceholder("Search all 27 tools").fill("break even roas");
+  const toggle = page.getByRole("button", { name: /Break-Even ROAS Calculator/ });
+  await toggle.click();
+
+  await expect(page.getByLabel("Achieved ROAS")).toHaveValue("3");
+  await expect(page.getByText("Profit per order at 3.0x ROAS")).toBeVisible();
+  await expect(
+    page.getByRole("img", { name: "Profit per order across ROAS from 0.5x to 8.0x" }),
+  ).toBeVisible();
+  await expect(toggle).toHaveAttribute("data-state", "expanded");
+
+  await page.getByLabel("Achieved ROAS").fill("4");
+  await expect(page.getByText("Profit per order at 4.0x ROAS")).toBeVisible();
+  await expect(page.getByText("$25.38", { exact: true })).toBeVisible();
+});
+
 test("A/B significance and UTM tools render their specialized outputs", async ({
   page,
 }) => {
