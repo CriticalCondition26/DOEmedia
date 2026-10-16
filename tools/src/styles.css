@@ -1039,6 +1039,134 @@ footer p {
   }
 }
 
+.slider-field {
+  display: grid;
+  gap: 6px;
+}
+
+.slider-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.slider-head label {
+  margin-bottom: 0;
+}
+
+.slider-value {
+  flex: none;
+  min-width: 64px;
+  padding: 5px 10px;
+  border: 1px solid #d8d2c9;
+  border-radius: 9px;
+  background: #faf9f7;
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.slider {
+  --fill: 0%;
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--purple) var(--fill), #e4dfd7 var(--fill));
+}
+
+.slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: #e4dfd7;
+}
+
+.slider::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--purple);
+}
+
+.slider::-webkit-slider-thumb {
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 25%);
+  -webkit-appearance: none;
+  appearance: none;
+  transition: transform 120ms ease;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 25%);
+}
+
+.slider:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+.slider:focus {
+  outline: 0;
+}
+
+.slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgb(105 74 226 / 25%);
+}
+
+.slider:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px rgb(105 74 226 / 25%);
+}
+
+.slider-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .slider {
+    height: 44px;
+  }
+
+  .slider::-webkit-slider-thumb {
+    width: 30px;
+    height: 30px;
+    margin-top: -12px;
+  }
+
+  .slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+  }
+
+  .slider-value {
+    font-size: 14px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

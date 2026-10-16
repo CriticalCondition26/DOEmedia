@@ -7,6 +7,7 @@ import {
   type CalculatorDefinition,
   type FieldDefinition,
 } from "./calculator-definitions";
+import { formatFieldValue, nearestStop, sliderScale } from "./slider-scales";
 import doeLogo from "./assets/doe-logo.svg";
 import "./styles.css";
 
@@ -73,6 +74,51 @@ function outputLabel(
   return baseLabel;
 }
 
+function SliderField({
+  definition,
+  value,
+  onChange,
+  id,
+}: {
+  definition: FieldDefinition;
+  value: string | number;
+  onChange: (value: string | number) => void;
+  id: string;
+}) {
+  const { stops } = useMemo(() => sliderScale(definition), [definition]);
+  const numeric = Number(value);
+  const index = nearestStop(stops, numeric);
+  const fill = stops.length > 1 ? (index / (stops.length - 1)) * 100 : 0;
+  const label = formatFieldValue(definition, numeric);
+
+  return (
+    <div className="field slider-field">
+      <div className="slider-head">
+        <label htmlFor={id}>{definition.label}</label>
+        <output htmlFor={id} className="slider-value">
+          {label}
+        </output>
+      </div>
+      <input
+        id={id}
+        className="slider"
+        type="range"
+        min={0}
+        max={stops.length - 1}
+        step={1}
+        value={index}
+        aria-valuetext={label}
+        style={{ "--fill": `${fill}%` } as React.CSSProperties}
+        onChange={(event) => onChange(stops[Number(event.target.value)])}
+      />
+      <div className="slider-scale" aria-hidden="true">
+        <span>{formatFieldValue(definition, stops[0], true)}</span>
+        <span>{formatFieldValue(definition, stops[stops.length - 1], true)}</span>
+      </div>
+    </div>
+  );
+}
+
 function Field({
   definition,
   value,
@@ -86,6 +132,11 @@ function Field({
 }) {
   const id = `${idPrefix}-field-${definition.key}`;
   const stringInput = definition.kind === "text" || definition.kind === "textarea";
+
+  if (definition.kind === "number" || definition.kind === "range") {
+    return <SliderField definition={definition} value={value} onChange={onChange} id={id} />;
+  }
+
   const props = {
     id,
     value,
@@ -98,7 +149,6 @@ function Field({
     <div className="field">
       <label htmlFor={id}>{definition.label}</label>
       <div className="input-wrap">
-        {definition.unit === "$" && <span className="input-prefix">$</span>}
         {definition.kind === "textarea" ? (
           <textarea {...props} rows={4} />
         ) : definition.kind === "select" ? (
@@ -110,38 +160,9 @@ function Field({
               </option>
             ))}
           </select>
-        ) : definition.kind === "range" ? (
-          <div className="range-control">
-            <input
-              {...props}
-              type="range"
-              min={definition.min}
-              max={definition.max}
-              step={definition.step}
-            />
-            <output htmlFor={id}>
-              {definition.unit === "$" ? "$" : ""}
-              {Number(value).toFixed(definition.step && definition.step < 1 ? 1 : 0)}
-              {definition.unit === "x" ? "x" : definition.unit === "%" ? "%" : definition.unit === "months" ? " mo" : ""}
-            </output>
-          </div>
         ) : (
-          <input
-            {...props}
-            type={definition.kind === "text" ? "text" : "number"}
-            min={definition.min}
-            max={definition.max}
-            step={definition.step ?? "any"}
-          />
+          <input {...props} type="text" />
         )}
-        {definition.unit &&
-          definition.unit !== "$" &&
-          definition.kind !== "select" &&
-          definition.kind !== "range" && (
-          <span className="input-suffix">
-            {definition.unit === "count" ? "" : definition.unit}
-          </span>
-          )}
       </div>
     </div>
   );
@@ -398,7 +419,7 @@ export default function App() {
           </h1>
           <p className="hero-copy">
             Twenty-seven calculators for media, margin, customer value, and testing.
-            Put in your numbers. Get the answer that changes the next decision.
+            Slide to your numbers. Get the answer that changes the next decision.
           </p>
           <div className="hero-actions">
             <a className="primary-link" href="#calculators">
@@ -413,7 +434,7 @@ export default function App() {
             <p className="eyebrow">The Calculator Library</p>
             <h2>One Question. One Clear Number.</h2>
             <p>
-              Start with the lever you are working on. Every tool updates as you type
+              Start with the lever you are working on. Slide the inputs. Every tool updates live
               and shows the math behind the result.
             </p>
           </div>

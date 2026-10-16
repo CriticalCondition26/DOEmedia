@@ -1,5 +1,24 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
+
+/** Sliders replace number boxes: press arrow keys until the live label matches. */
+async function slideTo(slider: Locator, label: string) {
+  await slider.focus();
+  for (let i = 0; i < 2000; i += 1) {
+    const current = await slider.getAttribute("aria-valuetext");
+    if (current === label) return;
+    const value = Number(await slider.inputValue());
+    const max = Number(await slider.getAttribute("max"));
+    if (value >= max) break;
+    await slider.press("ArrowRight");
+  }
+  for (let i = 0; i < 2000; i += 1) {
+    const current = await slider.getAttribute("aria-valuetext");
+    if (current === label) return;
+    await slider.press("ArrowLeft");
+  }
+  throw new Error(`Slider never reached ${label}`);
+}
 
 const widths = [390, 768, 1440] as const;
 
@@ -55,7 +74,7 @@ test("search finds a calculator and live result updates", async ({ page }) => {
   await page.getByRole("button", { name: /Break-Even ROAS Calculator/ }).click();
 
   await expect(page.getByText("1.76", { exact: true })).toBeVisible();
-  await page.getByLabel("Average order value").fill("100");
+  await slideTo(page.getByLabel("Average order value"), "$100");
   await expect(page.getByText("1.54", { exact: true })).toBeVisible();
 });
 
@@ -67,14 +86,14 @@ test("break-even ROAS exposes its achieved scenario and profit curve", async ({
   const toggle = page.getByRole("button", { name: /Break-Even ROAS Calculator/ });
   await toggle.click();
 
-  await expect(page.getByLabel("Achieved ROAS")).toHaveValue("3");
+  await expect(page.getByLabel("Achieved ROAS")).toHaveAttribute("aria-valuetext", "3.0x");
   await expect(page.getByText("Profit per order at 3.0x ROAS")).toBeVisible();
   await expect(
     page.getByRole("img", { name: "Profit per order across ROAS from 0.5x to 8.0x" }),
   ).toBeVisible();
   await expect(toggle).toHaveAttribute("data-state", "expanded");
 
-  await page.getByLabel("Achieved ROAS").fill("4");
+  await slideTo(page.getByLabel("Achieved ROAS"), "4.0x");
   await expect(page.getByText("Profit per order at 4.0x ROAS")).toBeVisible();
   await expect(page.getByText("$25.38", { exact: true })).toBeVisible();
 });
@@ -108,6 +127,18 @@ test("expanded calculator has no serious axe violations", async ({ page }) => {
   ).toEqual([]);
 });
 
+test("every numeric input is a slider with a formatted live label", async ({ page }) => {
+  await page.goto("/");
+  for (const button of await page.locator(".tool-summary").all()) await button.click();
+  await expect(page.locator('input[type="number"]')).toHaveCount(0);
+  const sliders = page.locator('input[type="range"]');
+  expect(await sliders.count()).toBeGreaterThan(80);
+  const spend = page.locator("#ad-spend-calculator-field-budget");
+  await expect(spend).toHaveAttribute("aria-valuetext", "$10,000");
+  await slideTo(spend, "$20,000");
+  await expect(page.locator("#ad-spend-calculator .result-row").first()).toContainText("$20,000");
+});
+
 test("open calculators keep field IDs unique", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: /Break-Even ROAS Calculator/ }).click();
@@ -121,9 +152,11 @@ test("open calculators keep field IDs unique", async ({ page }) => {
 
 test("zero divisors show a clear calculation message", async ({ page }) => {
   await page.goto("/");
-  await page.getByPlaceholder("Search all 27 tools").fill("ad budget");
-  await page.getByRole("button", { name: /Ad Budget Calculator/ }).click();
-  await page.getByLabel("Average order value").fill("0");
+  await page.getByPlaceholder("Search all 27 tools").fill("conversion rate");
+  await page.getByRole("button", { name: /Conversion Rate Calculator/ }).click();
+  const sessions = page.getByLabel("Sessions");
+  await sessions.focus();
+  await sessions.press("Home");
 
   await expect(
     page.getByText("This calculation needs a non-zero value in every divisor field."),
