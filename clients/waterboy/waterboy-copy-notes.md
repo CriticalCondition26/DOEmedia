@@ -5,7 +5,7 @@
 The reader arrives having seen a static Meta ad (real Waterboy photo) whose hook matches the page headline. Mobile, cold, problem or solution aware.
 
 ## Top-of-page lines (shared)
-- Top worry (their words): "Drinking just water does not help me with my hydration" (REV 2026-07-24).
+- Top worry (their words): [NO QUOTE YET]. Earlier quote removed (excluded audience). Closest in-audience: "Whenever I wake up dehydrated, I always pound a weekend recovery with water." (REV 2026-02-26).
 - One idea: the founders' five-step morning-after routine, in one stick; the step that matters most is the one water can't do (salt debt).
 - Reader outcome: they bookend the night (one stick the night of, one next morning).
 - Wrong belief fixed: "Water is enough."

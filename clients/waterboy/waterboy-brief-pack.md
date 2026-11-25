@@ -64,7 +64,7 @@ Flow 5: **Static or 15 to 30 second Meta ad → advertorial (one of 3) → Weeke
 ## 4. Shared funnel brief (lines 1, 3, 8, 14 for all pages)
 
 - **Line 1 Model:** ECOM.
-- **Line 3 Reader and top worry:** the Weekend Regular, 21 to 40, goes out, still has a Monday (BR §3.2 A); problem or solution aware. Worry in their words: "Drinking just water does not help me with my hydration" (REV, 2026-07-24).
+- **Line 3 Reader and top worry:** the Weekend Regular, 21 to 40, goes out, still has a Monday (BR §3.2 A); problem or solution aware. Worry in their words: [NO QUOTE YET] (the earlier quote came from an excluded daily-hydration/medical reviewer; closest in-audience line: "Whenever I wake up dehydrated, I always pound a weekend recovery with water." REV 2026-02-26, bought for Hangovers).
 - **Line 8 One mechanism:** Golden thread (approved flip): **"The five-step morning-after routine, in one stick."** Waterboy's founders used to run Pedialyte for electrolytes, raw ginger, Emergen-C and L-theanine after nights out; Weekend Recovery puts that routine in one zero-sugar, caffeine-free stick. Supporting logic, **"Salt Debt"**: drinking makes you pee out salt with the water, so water alone pays back half. Ritual, **"Bookend it"**: one stick the night of, one the next morning.
 - **Line 14 Who we ignore:** under-21s; anyone looking for permission to drink more; POTS or medical buyers (excluded by decision); athletes (Workout Hydration's job).
 - **Voice:** Waterboy's (BR §4 brand-voice lines): funny, honest, a little crude ("feel less shitty"), self-aware ("not a miracle cure"). Keep it PG-13; no "big D" joke in paid pages ([NEED: Alex OK on profanity level]).
