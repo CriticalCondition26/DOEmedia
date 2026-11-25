@@ -16,10 +16,12 @@
 | Flavors | Strawberry Lemonade, Blue Raspberry, Fruit Punch, Candied Grape, Cherry Limeade; Sample Pack | PDP | CONFIRM current |
 | Usage | LP: one the night of, one next morning, 16 to 32 oz. PDP: 8 to 12 oz, "anytime" | LP / PDP | CONFIRM, conflict |
 | Free shipping | $35.99+ (PDP) vs $40 (LP) | PDP / LP | CONFIRM |
-| Guarantee | "30-day return" (LP) | LP | CONFIRM, not used in copy until confirmed |
+| Guarantee | None. Refund policy: "All sales are final, unless the product is defective" (LP's "30-day return" contradicts it) | waterboy.com/policies/refund-policy | ✅ no guarantee in copy |
 | Shipping time | Process 1 to 2 business days, ship about 4 to 6 | PDP | ✅ |
 | Reviews | 4.7 stars, 10,497 reviews | PDP 2026-11-25 | ✅ changes daily |
 | Retail | Brand strip lists Target, Walmart, CVS, Walgreens and others | Homepage | CONFIRM Weekend Recovery stock |
 | Founders | Mike and Connor; five-step story (Pedialyte, raw ginger, Emergen-C, L-theanine) | Our Story page | ✅ text; CONFIRM use in paid ads |
 
-**Never say:** cure, prevent, treat, "cut your hangover in half," "10M+ mornings recovered," nausea or anxiety outcomes, root cause, drink more, safer drinking.
+**Claim level (approved by Tommy, 2026-11-25): match the brand's own site.** Allowed: "Humiliate Hangxiety", "Give Nausea a Gag Order", "Smack Fatigue (caffeine free)" (homepage); L-theanine "to calm your nerves and restlessness", ginger "to aid with digestion", "9x electrolytes vs leading sports drink" (PDP); 200mg L-theanine (LP and pouch, CONFIRM); verbatim reviews with a results-vary note.
+
+**Never say (in the brand's voice):** cure, prevent, treat, "cut your hangover in half," "10M+ mornings recovered," quantified efficacy percentages, root cause, anything implying drinking more or drinking safer.
