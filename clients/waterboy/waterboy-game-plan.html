@@ -1,0 +1,118 @@
+<title>Waterboy Game Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
+<style>
+/* Layout: one sheet of white notebook paper. Red margin rule on the left, no ruled lines, clean modern type with short red labels in the margin. */
+:root{
+  --paper:#fdfdfb;
+  --desk:#e9e6df;
+  --ink:#1d2129;
+  --ink-soft:#4a505c;
+  --red:#c8322f;
+  --red-soft:#e7a3a1;
+  --pencil:#8a8f99;
+  --hilite:#fff3a8;
+  --type:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --hand:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --stamp:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --margin:88px;
+  color-scheme:light;
+}
+html{background:var(--desk)}
+body{background:var(--desk);color:var(--ink);font-family:var(--type);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.sheet{position:relative;max-width:900px;margin:0 auto;background:var(--paper);
+  box-shadow:0 1px 2px rgba(40,30,20,.12),0 12px 30px rgba(40,30,20,.10);
+  padding:56px 44px 64px calc(var(--margin) + 28px)}
+.sheet::before{content:"";position:absolute;top:0;bottom:0;left:var(--margin);width:2px;background:var(--red);opacity:.8}
+.sheet::after{content:"";position:absolute;top:0;bottom:0;left:calc(var(--margin) + 4px);width:1px;background:var(--red);opacity:.35}
+.holes{position:absolute;left:26px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;pointer-events:none}
+.holes span{display:block;width:20px;height:20px;border-radius:50%;background:var(--desk);box-shadow:inset 1px 1px 3px rgba(0,0,0,.18)}
+h1,h2,h3{font-family:var(--stamp);font-weight:700;text-wrap:balance;letter-spacing:-.01em;margin:0}
+h1{font-size:2.2rem;line-height:1.12;font-weight:800}
+h2{font-size:1.45rem;margin-top:56px;padding-bottom:6px;border-bottom:2px solid var(--ink);display:inline-block}
+h3{font-size:1.12rem;margin-top:30px}
+p{margin:12px 0;max-width:68ch}
+.kicker{font-family:var(--stamp);font-weight:600;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.note{font-family:var(--hand);color:var(--red);font-size:1.02rem;line-height:1.5;font-weight:600;border-left:3px solid var(--red);padding-left:12px;max-width:68ch}
+.margin-note{position:absolute;left:calc(-1 * var(--margin) - 22px);top:66px;width:calc(var(--margin) - 14px);font-family:var(--stamp);color:var(--red);font-size:.68rem;line-height:1.25;letter-spacing:.08em;text-transform:uppercase;text-align:right;font-weight:700}
+.rel{position:relative}
+.hl{background:linear-gradient(transparent 55%,var(--hilite) 55%);padding:0 2px}
+.circle{border:2px solid var(--red);border-radius:50% 46% 52% 48%;padding:0 7px}
+.under{text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:4px}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px}
+ul,ol{margin:10px 0;padding-left:1.4em;max-width:70ch}
+li{margin:6px 0}
+ul.dash{list-style:none;padding-left:1.2em}
+ul.dash li::before{content:"-";position:absolute;margin-left:-1.1em;color:var(--red);font-weight:700}
+.tbl{overflow-x:auto;margin:16px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;line-height:1.45}
+th{font-family:var(--stamp);font-weight:700;text-align:left;border-bottom:2px solid var(--ink);padding:8px 10px 6px;vertical-align:bottom;letter-spacing:.03em}
+td{border-bottom:1px solid #dcdfe4;padding:9px 10px;vertical-align:top}
+td:first-child{white-space:nowrap}
+.tnum{font-variant-numeric:tabular-nums}
+.persona{margin-top:34px;padding:20px 22px 18px;border:1.5px solid var(--ink);position:relative}
+.persona .tag{position:absolute;top:-12px;left:16px;background:var(--paper);padding:0 8px;font-family:var(--stamp);font-weight:700;font-size:.74rem;letter-spacing:.1em;color:var(--red)}
+.headline{font-family:var(--stamp);font-weight:700;font-size:1.32rem;line-height:1.28;margin:6px 0 4px;text-wrap:balance}
+.sub{font-style:italic;color:var(--ink-soft);margin:4px 0 14px}
+dl{display:grid;grid-template-columns:150px 1fr;gap:6px 16px;margin:8px 0 0;font-size:.92rem}
+dt{font-family:var(--stamp);font-weight:600;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);padding-top:3px}
+dd{margin:0;min-width:0}
+.box{border:2px dashed var(--red);padding:14px 18px;margin:20px 0}
+.box p{margin:6px 0}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;font-size:.9rem}
+.flow span{border:1.5px solid var(--ink);padding:4px 10px}
+.flow b{color:var(--red);font-family:var(--stamp);font-size:1.1rem;font-weight:700}
+.sig{margin-top:48px;font-family:var(--stamp);font-weight:600;font-size:1rem;color:var(--ink-soft)}
+.src{font-size:.82rem;color:var(--ink-soft)}
+.src li{margin:4px 0}
+a{color:var(--ink);text-decoration-color:var(--red)}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+@media (max-width:700px){
+  :root{--margin:30px}
+  body{font-size:15px;padding-block:12px 32px}
+  .sheet{padding:34px 18px 44px calc(var(--margin) + 14px)}
+  .holes{left:6px}
+  .holes span{width:12px;height:12px}
+  h1{font-size:1.65rem}
+  .margin-note{position:static;display:block;width:auto;text-align:left;margin:22px 0 -10px;font-size:.7rem}
+  dl{grid-template-columns:1fr;gap:2px}
+  dt{padding-top:10px}
+  td:first-child{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="sheet"><div class="holes" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="kicker">DOE Media &middot; Desire Engine game plan &middot; November 25, 2026</div><h1>Waterboy Weekend Recovery: what the pre-sell funnel needs, piece by piece</h1>
+<p class="note">The blind review agreed with Tommy's read: the three pre-sell pages explain a story or a spec, but none of them makes a cold reader feel what Saturday night is about to cost them. This plan re-aims each page at one desire, gives each a headline with a clear outcome, stakes and a paradox, and fixes the handoff to the product page. Every headline is a draft to test; every persona is a hypothesis.</p>
+<p><b>Skills this plan runs on:</b> funnel-desire-review (blind review, reconciled), funnel-game-plan, swipe-vault, client-onboarding quick read (brand and market research), rmbc-mechanism, rmbc-brief, rmbc-copy, rmbc-copy-chief.</p>
+<div class="rel"><span class="margin-note">Leaks</span><h2>1. Where it leaks today</h2></div>
+<div class="tbl"><table><tr><th>Leak</th><th>What happens</th><th>Source</th></tr><tr><td>Headlines sell a story or a spec</td><td>P1 "Two Guys Ran a Five-Step Routine..." and P2 "...Over 3x the Electrolytes" never name what the reader gets or what she loses if she does nothing. Scored 24/30, 12/30 and 22/30.</td><td>Blind review §3, Appendix A1 (grade D, reviewer estimate)</td></tr><tr><td>The product page breaks the story</td><td>PDP says mix 8 to 12 oz, take it "first thing in the morning", shows 10 calories (label: 5) and $20.00 one-time vs $19.99 subscribed. Every buyer crosses this.</td><td>PDP pulled 2026-11-25 (grade A)</td></tr><tr><td>No reason to buy today, no risk reversal</td><td>"All sales are final, unless the product is defective." Competitors with money-back terms: DripDrop, LMNT, Liquid I.V., Cheers.</td><td>waterboy.com/policies/refund-policy 2026-11-25 (A); review §6 (B)</td></tr><tr><td>First CTA comes late, retail logos sit in the buy zone</td><td>P1 shows Target, Walmart, CVS, Walgreens right above the price box: a cold reader is told to drive to a store.</td><td>Review §3 (B)</td></tr><tr><td>Free shipping never applies to the main buy</td><td>One pouch ($19.99 or $24.99) never reaches $35.99.</td><td>PDP (A)</td></tr></table></div>
+<p class="note">What fixing the top leak is worth: no click or conversion data yet, so this is illustration only. If page to PDP click-through moves from <span class="circle">15%</span> to 20% on the same traffic, PDP sessions from paid social rise by a third. (DOE proposal, not a forecast.)</p>
+<div class="rel"><span class="margin-note">Big idea</span><h2>2. The big idea</h2></div>
+<div class="box"><p class="headline">Water pays back half of Saturday night. Bookend the night with one stick before bed and one at breakfast, and keep your Sunday.</p><p><b>The enemy:</b> the responsible-feeling routine that doesn't work: chug water, sleep it off, coffee, a breakfast sandwich, and a sugary sports drink.</p><p><b>The mechanism:</b> salt debt. Drinking makes you pee out sodium, potassium and magnesium with the water; water repays only the water. Weekend Recovery carries 3,205mg electrolytes, 0g sugar, no caffeine, plus the founders' old five-step kit (ginger, L-theanine, vitamin C, B12) in one stick.</p><p><b>The thesis:</b> there's a better way (bookend it), two friends who lived the problem built it, and 10,497 reviewers already do it.</p><p><b>Desire shift:</b> the old pages led with <span class="strike">the founders' story and the milligram count</span>; the proof proves the day you keep (LF3, LF1), so every page now leads with Sunday and uses the story and the numbers as proof.</p></div>
+<p><b>Claim Defensibility Check:</b> no competitor checked sells a two-stick routine that starts before bed (review §1). A competitor could say "electrolytes after drinking"; none can say "the five-step routine we used to run, in one stick" or own "bookend the night" first. Pass.</p>
+<div class="rel"><span class="margin-note">Who buys</span><h2>3. The core people (HYPOTHESIS)</h2></div>
+<div class="tbl"><table><tr><th>Persona</th><th>What she wants most</th><th>Core desire</th><th>Emotions</th><th>Proof she needs</th><th>Biggest doubt</th><th>Evidence</th></tr><tr><td>A. The Sunday Keeper</td><td>"get my day back on track and moving"</td><td>LF3, LF1</td><td>dread, relief</td><td>A reviewer who does the before-bed stick</td><td>"Does anything help?"</td><td>82 of 600 reviews mention drinking (REV)</td></tr><tr><td>B. The Label Reader</td><td>Less sugar, more of what works for the money</td><td>LW-QUALITY, LW-ECONOMY, LF6</td><td>skepticism, pride</td><td>Label side by side</td><td>"Isn't this just pricey salt water?"</td><td>Switcher reviews (REV), Foundation A cluster B</td></tr><tr><td>C. The Weekend Planner</td><td>Be the one still up for day two and three</td><td>LF8, LF6, LF1</td><td>anticipation, envy</td><td>Trip reviews: festival, vacation, Disney weekend</td><td>"Will it ship in time?"</td><td>Travel reviews (REV), "12 weddings" LP review</td></tr></table></div>
+<div class="rel"><span class="margin-note">Validate</span><h2>4. How we find out who they really are</h2></div>
+<p>Survey (7 questions) to recent Weekend Recovery buyers via Klaviyo, with a free Sample Pack draw as thanks: 1 what you mostly use it for (night out, trip or event, workouts, everyday); 2 how often you go out; 3 the number one thing you want from it; 4 what almost stopped you; 5 what you used before and what happened; 6 "a month from now, I'd know it was worth it if..."; 7 which of the three headlines below you'd click first. Plus ten 20-minute calls (five buyers, five who visited and didn't buy). Keep a persona if 15% or more point to her and a permissioned story exists. Quick win: add "What do you mostly use Waterboy for?" to the pop-up to tag every new subscriber.</p>
+<div class="rel"><span class="margin-note">Entry points</span><h2>5. Entry points per persona</h2></div>
+<div class="persona"><span class="tag">PAGE A &middot; THE SUNDAY KEEPER</span><p class="headline">The Responsible Thing You Do Every Saturday Night That Still Costs You Sunday</p><p class="sub">Water pays back half of the night. Two friends found the other half, and it takes 30 seconds before bed.</p><dl><dt>Lead type</dt><dd>Problem-solution, blind lead</dd><dt>Golden thread</dt><dd>#4 Danger in the thing you trust: "You only think you're making the right choice." (564, Health Controls, signed William Davis, MD); #16 Paint the morning after (068, Agora)</dd><dt>Proof block</dt><dd>Label image; before-bed review (2026-10-02); founders' Our Story quote</dd><dt>Ad hooks</dt><dd>"You drank the water. You still lost Sunday." / "Two glasses of water pay back half of Saturday night."</dd></dl><p class="note">Keep "the responsible thing" honest: water is good, it just isn't enough.</p></div>
+<div class="persona"><span class="tag">PAGE B &middot; THE LABEL READER</span><p class="headline">Any Electrolyte Stick Works After a Night Out, Right? Flip Yours Over. Most Were Built for a Desk, Not a Saturday Night.</p><p class="sub">A 10-second label check, then five rounds against a typical everyday stick. We lose one.</p><dl><dt>Lead type</dt><dd>Challenge or experiment, aware lead</dd><dt>Golden thread</dt><dd>#7 Right? Wrong!: "If you drink bottled water you're safe, right? Wrong." (081 MR-1, Betuel); #4 self-check: "Check the bottle." (Golden threads #4 list)</dd><dt>Proof block</dt><dd>Label side by side, honest round losses (taste, price per stick)</dd><dt>Ad hooks</dt><dd>"Flip over the stick in your cabinet." / "The sugar line tells you who it was built for."</dd></dl><p class="note">Competitor stays unnamed until Alex and legal approve naming in writing.</p></div>
+<div class="persona"><span class="tag">PAGE C &middot; THE WEEKEND PLANNER</span><p class="headline">Same Wedding. Same Open Bar. Same 9 a.m. Brunch. Why One Friend Is Ordering Eggs and the Other Is Texting "Go Without Me."</p><p class="sub">The 30-second thing the planner packs that keeps day two and day three yours. 7 things in her carry-on.</p><dl><dt>Lead type</dt><dd>Story, juxtaposition, blind lead</dd><dt>Golden thread</dt><dd>#24 Two men, one difference: "But there was a difference." (022, Martin Conroy)</dd><dt>Proof block</dt><dd>Trip reviews (festival, vacation, long weekend)</dd><dt>Ad hooks</dt><dd>"You paid $1,200 for this weekend. Don't spend day two in sunglasses." / "Same open bar. Different brunch."</dd></dl><p class="note">Illustration, not a claim of effect: the two friends are a picture, not a customer story.</p></div>
+<p><b>Fixes every entry point needs:</b> first in-body CTA right after the mechanism; remove retail logos from the buy zone; sticky bar "Get the two-stick routine, $1.67 a stick"; "Two pouches ship free"; no guarantee line until the policy changes; one multiplier per page with its reference point.</p>
+<div class="rel"><span class="margin-note">Belief chain</span><h2>6. Before the purchase</h2></div>
+<div class="tbl"><table><tr><th>Belief</th><th>Where it's installed</th></tr><tr><td>A rough Sunday isn't bad luck, it's a debt</td><td>Page lead and mechanism</td></tr><tr><td>Water repays only half</td><td>Mechanism, label check</td></tr><tr><td>A two-stick bookend covers it</td><td>Routine block</td></tr><tr><td>This stick is the one built for it</td><td>Five-step origin, label</td></tr><tr><td>It's worth $1.67 a stick</td><td>Price block vs a lost Sunday</td></tr><tr><td>It's safe to try now</td><td>Sample Pack, skip or cancel by text</td></tr></table></div>
+<p>Flows (route to lifecycleos-email-writer): welcome tagged by the pop-up answer; browse abandon with the before-bed review; cart abandon leading with the label check; post-purchase "set your bookend" reminder Friday 6 p.m.</p>
+<div class="rel"><span class="margin-note">Main event</span><h2>7. The pre-sell and PDP by fold</h2></div>
+<p>Advertorial: fold 1 headline, subhead, the Sunday scene with stakes; fold 2 the paradox (did the responsible thing, still lost the day); fold 3 salt debt in plain words and the label; CTA 1; fold 4 the five-step origin; fold 5 the bookend routine and the Sunday you get back; fold 6 the honest part (salty, $1.67, not a miracle); reviews; offer; FAQ. PDP: add "One before bed, one with breakfast" above the fold, align mixing and calories, move claims back inside the safe lane.</p>
+<div class="rel"><span class="margin-note">Close</span><h2>8. The close</h2></div>
+<p>Offer box: $19.99 subscribed, $24.99 once, Sample Pack, "Two pouches ship free". Real urgency only: the 30%-off sale through Dec 4 can run as a dated ribbon and must come down that day. Checkout: show the shipping fee on one pouch before checkout.</p>
+<div class="rel"><span class="margin-note">Metrics</span><h2>9. How we'll know it's working</h2></div>
+<div class="tbl"><table><tr><th>Stage</th><th>Watch</th><th>Today</th><th>First target</th></tr><tr><td>Ad</td><td>CTR</td><td>No data yet</td><td>Set after week 1 (DOE proposal)</td></tr><tr><td>Pre-sell</td><td>Click to PDP, scroll to mechanism</td><td>No data yet</td><td>20% click-through (DOE proposal)</td></tr><tr><td>PDP</td><td>Add to cart, CVR</td><td>[NEED: Shopify, last 30 days]</td><td>Beat the ad-to-PDP control</td></tr><tr><td>Order</td><td>AOV, subscribe share</td><td>[NEED]</td><td>Two-pouch share up</td></tr></table></div>
+<div class="rel"><span class="margin-note">Order of work</span><h2>10. What gets done, in order</h2></div>
+<div class="tbl"><table><tr><th>Week</th><th>What</th><th>Why first</th><th>Skill</th></tr><tr><td>1</td><td>Rewrite the three pages to the entry points above</td><td>Fastest lift, copy only</td><td>rmbc-copy, then rmbc-copy-chief and the desire scorecard</td></tr><tr><td>1</td><td>PDP alignment list to Waterboy (mixing, timing, calories, claims)</td><td>Every buyer crosses it</td><td>doe-cro-audit</td></tr><tr><td>2</td><td>Survey and ten calls</td><td>Confirms the personas</td><td>rmbc-research</td></tr><tr><td>2</td><td>Static ads per page</td><td>Message match</td><td>rmbc-copy</td></tr><tr><td>3 to 6</td><td>A/B each page vs the ad-to-PDP control</td><td>Decide on EPS</td><td>paid social</td></tr></table></div>
+<p><b>Open questions for Waterboy:</b> will you add any satisfaction guarantee; which multiplier is approved (3x vs everyday sticks or 9x vs a sports drink); correct mixing and calories; OK to name the founders in ads; OK to name a competitor.</p>
+<p class="sig">DOE Media, game plan draft</p><h3>Sources</h3><ul class="src"><li>blind-waterboy/review.md (blind review, 2026-11-25, reconciled)</li><li>waterboy.com PDP, refund policy, Our Story, weekend-recovery LP (pulled 2026-11-25, grade A)</li><li>raw/wr_reviews.json: 600 Okendo reviews, 2026-02-24 to 2026-11-24 (A)</li><li>Swipe vault letters 564, 081 MR-1, 022, 068</li></ul></div>
